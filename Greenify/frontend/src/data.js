@@ -49,7 +49,7 @@ products: [
         brand: 'Orchid',
         rating: 4.5,
         numReviews: 10,
-        description: 'A Orchid is a flowering plant in the Orchid family.',
+        description: 'A Orchid is a colorful flowering plant in the Orchid family.',
     },
 ],
 };
