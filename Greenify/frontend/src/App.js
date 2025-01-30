@@ -3,24 +3,19 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Badge from 'react-bootstrap/Badge';
 import { LinkContainer } from 'react-router-bootstrap';
 import './index.css';
+import { useContext } from 'react';
+import { Store } from './Store';
 
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * The main App component, which wraps the entire site in a BrowserRouter
- * and lays out the header, main content, and footer.
- *
- * The header contains a dark navbar with a link to the home page.
- *
- * The main content is a container that holds the routes.
- *
- * The footer is a simple div that says "All rights reserved".
- *
- * @returns {React.ReactElement} The rendered App component.
- */
-/******  8e88628a-c5e4-4f5c-a465-2dad71b617f2  *******/
 function App() {
+
+  const { state } = useContext(Store);
+  const { cart } = state;
+
+
   return (
     <BrowserRouter>
       <div className="d-flex flex-column site-container">
@@ -30,6 +25,17 @@ function App() {
               <LinkContainer to="/">
                 <Navbar.Brand>Greenify</Navbar.Brand>
               </LinkContainer>
+              <Nav className="me-auto">
+                <Link to="/cart" className="nav-link">
+                  Cart
+                {cart.cartItems.length > 0 && (
+                  <Badge pill bg="danger">
+                    {cart.cartItems.length}
+                  </Badge>
+                )}
+                </Link>
+              </Nav>
+
             </Container>
           </Navbar>
         </header>
