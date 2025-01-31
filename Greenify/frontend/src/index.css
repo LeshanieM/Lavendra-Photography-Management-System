@@ -48,6 +48,10 @@ main {
   max-width: 100%;
 }
 
+.img-thumbnail{
+  height:80px;
+}
+
 .paddingSet {
   padding-bottom: 20px;
 }
