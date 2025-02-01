@@ -55,3 +55,7 @@ main {
 .paddingSet {
   padding-bottom: 20px;
 }
+
+.small-container {
+  max-width: 600px;
+}
