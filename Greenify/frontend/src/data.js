@@ -1,7 +1,7 @@
 const data = {
   products: [
     {
-      _id: '1',
+      //  _id: '1',
       name: 'Rose Plant',
       slug: 'rose-plant',
       category: 'Plants',
@@ -15,7 +15,7 @@ const data = {
     },
 
     {
-      _id: '2',
+      //_id: '2',
       name: 'Banyan Plant',
       slug: 'banyan-plant',
       category: 'Plants',
@@ -29,7 +29,7 @@ const data = {
     },
 
     {
-      _id: '3',
+      // _id: '3',
       name: 'Mango Plant',
       slug: 'mango-plant',
       category: 'Plants',
@@ -43,7 +43,7 @@ const data = {
     },
 
     {
-      _id: '4',
+      // _id: '4',
       name: 'Orchid Plant',
       slug: 'orchid-plant',
       category: 'Flowers',
