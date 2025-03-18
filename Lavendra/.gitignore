@@ -1,24 +1,54 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 .env
-node_modules
-/.pnp
+node_modules/
+.pnp/
 .pnp.js
 
 # testing
 /coverage
 
-# production
-build
+# production build output
+/build/
 
 # misc
-.DS_Store
+.DS_Store           
+# macOS file
+Thumbs.db            
+# Windows file
+
+# environment files for different environments
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# IDE/editor files
+.vscode/              
+# VS Code editor settings
+.idea/                
+# IntelliJ IDEA or JetBrains settings
+
+# Operating system files
+*.bak                 
+# Backup files
+*.swp                 
+# Swap files
+
+# npm package lock file (if using npm)
+package-lock.json     
+# Lock dependencies if using npm
+
+# Miscellaneous temporary files
+*.log                 
+# Log files
+*.gz                  
+# Compressed files
+
+# Yarn Plug'n'Play files
+.pnp/
+.pnp.js
