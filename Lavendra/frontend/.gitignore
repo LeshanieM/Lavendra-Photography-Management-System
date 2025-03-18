@@ -1,0 +1,19 @@
+# frontend/.gitignore
+
+# dependencies
+node_modules/
+.env
+
+# testing
+/coverage
+
+# production build output
+/build/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
