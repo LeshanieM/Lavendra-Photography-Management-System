@@ -1,8 +1,10 @@
+// App.js
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CreatePackageScreen from './screens/CreatePackageScreen'; // Import the CreatePackageScreen
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -32,7 +34,7 @@ function App() {
           <Navbar bg="dark" variant="dark">
             <Container className="mt-3">
               <LinkContainer to="/">
-                <Navbar.Brand>Greenify</Navbar.Brand>
+                <Navbar.Brand>Lavendra</Navbar.Brand>
               </LinkContainer>
               <Nav className="me-auto">
                 <Link to="/cart" className="nav-link">
@@ -42,6 +44,9 @@ function App() {
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}
+                </Link>
+                <Link to="/create-package" className="nav-link">
+                  Create Package
                 </Link>
                 {userInfo ? (
                   <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
@@ -75,6 +80,11 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route
+                path="/create-package"
+                element={<CreatePackageScreen />}
+              />{' '}
+              {/* Add this route */}
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
