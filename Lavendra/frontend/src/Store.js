@@ -7,6 +7,11 @@ const initialState = {
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null,
   cart: {
+    //This is the code for Photogarphy Venue
+    shippingAddress: localStorage.getItem('shippingAddress')
+      ? JSON.parse(localStorage.getItem('shippingAddress'))
+      : {},
+
     cartItems: localStorage.getItem('cartItems') // cart is stored in browser
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
@@ -44,6 +49,20 @@ function reducer(state, action) {
       return {
         ...state,
         userInfo: null,
+        cart: {
+          cartItems: [],
+          shippingAddress: {},
+        },
+      };
+
+    //This is the code for Photogarphy Venue
+    case 'SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: action.payload,
+        },
       };
 
     default:
