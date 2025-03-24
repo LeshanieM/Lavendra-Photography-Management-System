@@ -32,7 +32,8 @@ import Button from 'react-bootstrap/Button';
  import { getError } from './utils';
  import axios from 'axios';
  import SearchBox from './components/SearchBox';
-
+ import InquiryForm from './components/InquiryForm';
+import InquiryDashboard from './components/InquiryDashboard';
 
 const stripePromise = loadStripe('pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB');
 
@@ -139,6 +140,12 @@ function App() {
                 <Link to="/PaymentList" className="nav-link">
                   Payments
                 </Link>
+                <Link to="/inquiryForm" className="nav-link">
+                  Inquiry Form
+                </Link>
+                <Link to="/inquiryDashboard" className="nav-link">
+                  Inquiry Dashboard
+                </Link>
                   {userInfo ? (
                      <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                        <LinkContainer to="/profile">
@@ -209,7 +216,9 @@ function App() {
               <Route path="/order/:id" element={<OrderScreen />}></Route>
               <Route path="/shipping" element={<AddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />}></Route>
-              <Route path="/paymentList" element={<PaymentList/>}></Route>             
+              <Route path="/paymentList" element={<PaymentList/>}></Route>
+              <Route path="/inquiryForm" element={<InquiryForm/>}></Route>
+              <Route path="/inquiryDashboard" element={<InquiryDashboard/>}></Route>            
               <Route
                  path="/orderhistory"
                  element={<OrderHistoryScreen />}
