@@ -35,7 +35,7 @@ import Calendar from './Calendar';
 import HeroPage from './components/HeroPage';
 import Admin from './Admin';
 import Home from './components/Home';
-
+import BookingForm from './components/BookingForm';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -199,6 +199,15 @@ function App() {
                 <Nav.Link>Admin</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/custom"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>customize your Package</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
           </Nav>
         </div>
         <main>
@@ -225,6 +234,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/custom" element={<BookingForm />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}

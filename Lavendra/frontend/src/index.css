@@ -102,6 +102,7 @@ main {
 
 
 
+
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
 
 html,
@@ -136,4 +137,33 @@ body,
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+
+
+
+
+
+.text1,
+.text2 {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.text2 {
+  background-color: #008cba;
+  color: white;
+  cursor: pointer;
+}
+
+.text2:hover {
+  background-color: #006f98;
+}
+
+.booking-form {
+  max-width: 500px;
+  margin: 20px auto;
 }

@@ -1,8 +1,6 @@
 import express from 'express';
-import data from './data.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config();
 import mongoose from 'mongoose';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
@@ -10,6 +8,7 @@ import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';  
 import inquiryRoutes from './routes/inquiryRoutes.js';
+import bookingRoutes from './routes/BookingRoutes.js';
 
 
 dotenv.config();
@@ -26,6 +25,14 @@ mongoose
 const app = express();
 app.use(cors());
 
+// Enable CORS with specific configuration
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +43,8 @@ app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/inquiries',inquiryRoutes);
+app.use('/api/bookings', bookingRoutes);
+
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
