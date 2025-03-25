@@ -16,7 +16,7 @@ main {
 }
 
 .btn-primary,
- .btn-outline-primary {
+.btn-outline-primary {
   background-color: #f0c040;
   color: #000000;
 }
@@ -92,3 +92,7 @@ main {
 .active-nav {
   left: 0;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -6,13 +6,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './Store';
+import ContextWrapper from './context/ContextWrapper';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <StoreProvider>
       <HelmetProvider>
-        <App />
+        <ContextWrapper>
+          <App />
+        </ContextWrapper>
       </HelmetProvider>
     </StoreProvider>
   </React.StrictMode>
