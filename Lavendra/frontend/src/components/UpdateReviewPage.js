@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa'; // Import delete icon
 import '../styles.css';
+
 const UpdateReviewPage = () => {
   const [email, setEmail] = useState('');
   const [review, setReview] = useState(null);
@@ -79,7 +80,16 @@ const UpdateReviewPage = () => {
   };
 
   return (
-    <div className="update-review-page">
+    <div
+      className="update-review-page"
+      style={{
+        maxWidth: '800px',
+        margin: '0 auto',
+        padding: '20px',
+        backgroundColor: '#f9f9f9',
+        borderRadius: '8px',
+      }}
+    >
       <h1
         style={{
           color: '#000000',
@@ -113,9 +123,27 @@ const UpdateReviewPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="email-field"
+            style={{
+              width: '95%',
+              padding: '10px',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+            }}
           />
         </div>
-        <button className="button_1" type="submit">
+        <button
+          className="button_1"
+          type="submit"
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#3057cc',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '1rem',
+          }}
+        >
           Search
         </button>
       </form>
@@ -123,7 +151,15 @@ const UpdateReviewPage = () => {
       {/* If a review is found, show it and allow update/delete */}
       {review && (
         <div className="review-details">
-          <h2>Your Review</h2>
+          <h2
+            style={{
+              color: '#3057cc',
+              textAlign: 'center',
+              marginBottom: '1.5rem',
+            }}
+          >
+            Your Review
+          </h2>
 
           <form onSubmit={handleUpdateReview}>
             <div>
@@ -134,6 +170,13 @@ const UpdateReviewPage = () => {
                 onChange={(e) => setUpdatedReviewText(e.target.value)}
                 required
                 className="updated-review-textarea"
+                style={{
+                  width: '95%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  fontSize: '1rem',
+                }}
               ></textarea>
             </div>
             <div>
@@ -144,6 +187,13 @@ const UpdateReviewPage = () => {
                 onChange={(e) => setUpdatedRating(Number(e.target.value))}
                 required
                 className="rating-dropdown"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  fontSize: '1rem',
+                }}
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>
@@ -153,10 +203,41 @@ const UpdateReviewPage = () => {
               </select>
             </div>
 
-            <button className="button_1">Update</button>
+            <button
+              className="button_1"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#3057cc',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                width: '100%',
+              }}
+            >
+              Update
+            </button>
           </form>
 
-          <button onClick={handleDeleteReview} className="icon-btn ">
+          <button
+            onClick={handleDeleteReview}
+            className="icon-btn"
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '1.2rem',
+              margin: '5px',
+              backgroundColor: '#DC3545',
+              color: 'white',
+            }}
+          >
             <FaTrash />
           </button>
         </div>

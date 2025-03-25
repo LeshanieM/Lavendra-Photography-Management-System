@@ -52,7 +52,7 @@ const ReviewForm = () => {
   };
 
   return (
-    <div className="review-container">
+    <div style={{ maxWidth: '500px', margin: '2rem auto', padding: '3rem', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: '#f9f9f9' }}>
       <h1
         style={{
           color: '#000000',
@@ -74,6 +74,14 @@ const ReviewForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            style={{
+              width: '100%',
+              padding: '0.8rem',
+              marginBottom: '1rem',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              fontSize: '1rem',
+            }}
           />
         </div>
         <div>
@@ -83,6 +91,14 @@ const ReviewForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{
+              width: '100%',
+              padding: '0.8rem',
+              marginBottom: '1rem',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              fontSize: '1rem',
+            }}
           />
         </div>
         <div>
@@ -91,6 +107,14 @@ const ReviewForm = () => {
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             required
+            style={{
+              width: '100%',
+              padding: '0.8rem',
+              marginBottom: '1rem',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              fontSize: '1rem',
+            }}
           ></textarea>
         </div>
         <div>
@@ -101,6 +125,16 @@ const ReviewForm = () => {
             value={rating}
             onChange={(e) => setRating(Number(e.target.value))}
             required
+            style={{
+              fontSize: '1rem',
+              cursor: 'pointer',
+              transition: 'border-color 0.3s ease',
+              width: '100%',
+              padding: '0.8rem',
+              marginBottom: '1rem',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+            }}
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -111,15 +145,36 @@ const ReviewForm = () => {
         </div>
         <br />
         <br />
-        <button type="submit" className="button_1">
+        <button
+          type="submit"
+          style={{
+            width: '100%',
+            padding: '0.8rem',
+            border: 'none',
+            borderRadius: '4px',
+            backgroundColor: '#3057cc',
+            color: 'white',
+            fontSize: '1rem',
+            cursor: 'pointer',
+          }}
+        >
           Submit Review
         </button>
         <br />
         <br />
         <button
           type="button"
-          className="button_1"
           onClick={handleNavigateToUpdate}
+          style={{
+            width: '100%',
+            padding: '0.8rem',
+            border: 'none',
+            borderRadius: '4px',
+            backgroundColor: '#3057cc',
+            color: 'white',
+            fontSize: '1rem',
+            cursor: 'pointer',
+          }}
         >
           Go to My Reviews
         </button>
