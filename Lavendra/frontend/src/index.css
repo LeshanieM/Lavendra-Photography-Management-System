@@ -167,3 +167,11 @@ body,
   max-width: 500px;
   margin: 20px auto;
 }
+
+
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

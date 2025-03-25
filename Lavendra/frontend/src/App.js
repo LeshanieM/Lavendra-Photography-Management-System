@@ -39,6 +39,11 @@ import BookingForm from './components/BookingForm';
 import UpdateReviewPage from './components/UpdateReviewPage';
 import ReviewForm from './components/ReviewForm';
 import ReviewDisplay from './components/ReviewDisplay';
+import MapComponent from './components/delivery/MapComponent';
+import DeliveryPage from './components/delivery/DeliveryPage';
+import DeliveryForm from './components/delivery/DeliveryForm';
+import CustomerTracking from './components/delivery/CustomerTracking';
+
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
 );
@@ -226,12 +231,45 @@ function App() {
                 <Nav.Link>Add Reviews</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+
             <Nav.Item>
               <LinkContainer
                 to="/update-review"
                 onClick={() => setSidebarIsOpen(false)}
               >
                 <Nav.Link>Update review</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer to="/Map" onClick={() => setSidebarIsOpen(false)}>
+                <Nav.Link>Map</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/track-order"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>track-order</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer
+                to="/add-delivery"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link> add delivery</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/deliveries"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>deliveries</Nav.Link>
               </LinkContainer>
             </Nav.Item>
           </Nav>
@@ -264,6 +302,10 @@ function App() {
               <Route path="/reviews" element={<ReviewDisplay />} />
               <Route path="/addReview" element={<ReviewForm />} />
               <Route path="/update-review" element={<UpdateReviewPage />} />
+              <Route path="/Map" element={<MapComponent />} />
+              <Route path="/deliveries" element={<DeliveryPage />} />
+              <Route path="/add-delivery" element={<DeliveryForm />} />
+              <Route path="/track-order" element={<CustomerTracking />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
