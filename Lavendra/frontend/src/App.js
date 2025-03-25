@@ -36,7 +36,9 @@ import HeroPage from './components/HeroPage';
 import Admin from './Admin';
 import Home from './components/Home';
 import BookingForm from './components/BookingForm';
-
+import UpdateReviewPage from './components/UpdateReviewPage';
+import ReviewForm from './components/ReviewForm';
+import ReviewDisplay from './components/ReviewDisplay';
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
 );
@@ -208,6 +210,30 @@ function App() {
                 <Nav.Link>customize your Package</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+            <Nav.Item>
+              <LinkContainer
+                to="/reviews"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Reviews display</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer
+                to="/addReview"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Add Reviews</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer
+                to="/update-review"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Update review</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
           </Nav>
         </div>
         <main>
@@ -235,6 +261,9 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/home" element={<Home />} />
               <Route path="/custom" element={<BookingForm />} />
+              <Route path="/reviews" element={<ReviewDisplay />} />
+              <Route path="/addReview" element={<ReviewForm />} />
+              <Route path="/update-review" element={<UpdateReviewPage />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}

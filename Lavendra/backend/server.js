@@ -9,6 +9,8 @@ import orderRouter from './routes/orderRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';  
 import inquiryRoutes from './routes/inquiryRoutes.js';
 import bookingRoutes from './routes/BookingRoutes.js';
+import reviewRouter from './routes/ReviewRoute.js';
+
 
 
 dotenv.config();
@@ -44,6 +46,7 @@ app.use('/api/orders', orderRouter);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/inquiries',inquiryRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use("/reviews", reviewRouter);
 
 
 app.use((err, req, res, next) => {
