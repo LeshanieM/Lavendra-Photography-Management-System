@@ -33,6 +33,7 @@ import InquiryForm from './components/InquiryForm';
 import InquiryDashboard from './components/InquiryDashboard';
 import Calendar from './Calendar';
 import HeroPage from './components/HeroPage';
+import Admin from './Admin';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -89,9 +90,9 @@ function App() {
               <LinkContainer to="/">
                 <Navbar.Brand>
                   <img
-                    src="/images/logo.png" 
+                    src="/images/logo.png"
                     alt="Lavendra Logo"
-                    style={{ height: '80px', width: 'auto' }} 
+                    style={{ height: '80px', width: 'auto' }}
                   />
                 </Navbar.Brand>
               </LinkContainer>
@@ -184,6 +185,15 @@ function App() {
                 <Nav.Link>Calendar</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/admin"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Admin</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
           </Nav>
         </div>
         <main>
@@ -208,6 +218,7 @@ function App() {
               <Route path="/paymentList" element={<PaymentList />}></Route>
               <Route path="/inquiryForm" element={<InquiryForm />}></Route>
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/admin" element={<Admin />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
