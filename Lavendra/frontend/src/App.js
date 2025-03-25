@@ -34,6 +34,8 @@ import InquiryDashboard from './components/InquiryDashboard';
 import Calendar from './Calendar';
 import HeroPage from './components/HeroPage';
 import Admin from './Admin';
+import Home from './components/Home';
+
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -127,6 +129,9 @@ function App() {
                   <Link to="/hero" className="nav-link">
                     heropage
                   </Link>
+                  <Link to="/home" className="nav-link">
+                    Home
+                  </Link>
 
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
@@ -219,6 +224,7 @@ function App() {
               <Route path="/inquiryForm" element={<InquiryForm />}></Route>
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/home" element={<Home />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
