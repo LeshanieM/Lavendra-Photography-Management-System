@@ -43,6 +43,15 @@ import MapComponent from './components/delivery/MapComponent';
 import DeliveryPage from './components/delivery/DeliveryPage';
 import DeliveryForm from './components/delivery/DeliveryForm';
 import CustomerTracking from './components/delivery/CustomerTracking';
+import AdminLogin from './AdminLogin';
+
+import Team from './scenes/team';
+import Contacts from './scenes/contacts';
+import Bar from './scenes/bar';
+import Form from './scenes/form';
+import Line from './scenes/line';
+import Pie from './scenes/pie';
+import FAQ from './scenes/faq/faq';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -96,7 +105,7 @@ function App() {
               </Button>
 
               {/* Logo Image in the Navbar */}
-              <LinkContainer to="/">
+              <LinkContainer to="/product">
                 <Navbar.Brand>
                   <img
                     src="/images/logo.png"
@@ -105,7 +114,7 @@ function App() {
                   />
                 </Navbar.Brand>
               </LinkContainer>
-              <LinkContainer to="/">
+              <LinkContainer to="/product">
                 <Navbar.Brand>Lavendra</Navbar.Brand>
               </LinkContainer>
 
@@ -133,11 +142,9 @@ function App() {
                   <Link to="/inquiryDashboard" className="nav-link">
                     Inquiry Dashboard
                   </Link>
-                  <Link to="/hero" className="nav-link">
-                    heropage
-                  </Link>
-                  <Link to="/home" className="nav-link">
-                    Home
+
+                  <Link to="/adminLogin" className="nav-link">
+                    adminLogin
                   </Link>
 
                   {userInfo ? (
@@ -306,6 +313,17 @@ function App() {
               <Route path="/deliveries" element={<DeliveryPage />} />
               <Route path="/add-delivery" element={<DeliveryForm />} />
               <Route path="/track-order" element={<CustomerTracking />} />
+              <Route path="/adminLogin" element={<AdminLogin />} />
+
+              
+              <Route path="/line" element={<Line />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/invoices" element={< PaymentList/>} />
+              <Route path="/form" element={<Form />} />
+              <Route path="/bar" element={<Bar />} />
+              <Route path="/pie" element={<Pie />} />
+              <Route path="/faq" element={<FAQ />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
@@ -315,8 +333,8 @@ function App() {
                 element={<OrderHistoryScreen />}
               ></Route>
               <Route path="/create-package" element={<CreatePackageScreen />} />{' '}
-              {/* Add this route */}
-              <Route path="/" element={<HomeScreen />} />
+              {/* Add  route */}
+              <Route path="/" element={<HeroPage />} />
             </Routes>
           </Container>
         </main>
