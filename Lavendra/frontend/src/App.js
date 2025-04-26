@@ -52,6 +52,8 @@ import Form from './scenes/form';
 import Line from './scenes/line';
 import Pie from './scenes/pie';
 import FAQ from './scenes/faq/faq';
+import UserInquiriesPage from './components/userInquiriesPage';
+import AdminPaymentView from './components/AdminPaymentView';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -139,7 +141,7 @@ function App() {
                   <Link to="/inquiryForm" className="nav-link">
                     Inquiry Form
                   </Link>
-                  <Link to="/inquiryDashboard" className="nav-link">
+                  <Link to="/userinquirypage" className="nav-link">
                     Inquiry Dashboard
                   </Link>
 
@@ -327,6 +329,14 @@ function App() {
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
+              ></Route>
+              <Route
+                path="/userinquirypage"
+                element={<UserInquiriesPage />}
+              ></Route>
+              <Route
+                path="/adminpaymentview"
+                element={<AdminPaymentView />}
               ></Route>
               <Route
                 path="/orderhistory"

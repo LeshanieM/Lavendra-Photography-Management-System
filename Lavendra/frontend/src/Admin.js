@@ -13,7 +13,7 @@ import FAQ from './scenes/faq/faq';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import AdminLogin from './AdminLogin';
-import OrderHistory from './screens/OrderHistoryScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 
 function Admin() {
   const [theme, colorMode] = useMode();
@@ -31,7 +31,7 @@ function Admin() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<OrderHistory />} />
+              <Route path="/invoices" element={<OrderHistoryScreen/>} />
               <Route path="/form" element={<Form />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
