@@ -9,12 +9,34 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
+import emailjs from '@emailjs/browser';
 
 const InquiryForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [inquiryType, setInquiryType] = useState('general'); // Default inquiry type
+
+  const sendSubmissionEmail = (inquiry) => {
+    const templateParams = {
+        name: inquiry.name,
+        subject: inquiry.subject,
+        message: inquiry.message,
+        email: inquiry.email,
+    };
+
+    emailjs.send(
+        'service_ibuxp0v',
+        'template_u1vy8hr',
+        templateParams,
+        'T4LHQzJ8ui9jA8kKM'
+    ).then((res) => {
+        console.log('Email sent!', res.status, res.text);
+    }).catch((err) => {
+        console.error('Email failed:', err);
+    });
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +54,13 @@ const InquiryForm = () => {
     });
 
     if (response.ok) {
+      const formData = {
+        name,
+        email,
+        subject: inquiryType, // or 'subject' if you use that
+        message
+    };
+    sendSubmissionEmail(formData);
       alert('Inquiry Sent Successfully!');
       setName('');
       setEmail('');

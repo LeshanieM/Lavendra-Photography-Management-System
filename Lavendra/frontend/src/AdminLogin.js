@@ -27,6 +27,10 @@ function AdminLogin() {
             Inquiry
           </Button>
 
+          <Button color="inherit" onClick={() => navigate('/adminpaymentview')}>
+           Payments
+          </Button>
+
           <Button color="inherit" onClick={() => navigate('/deliveries')}>
             Delivery
           </Button>
