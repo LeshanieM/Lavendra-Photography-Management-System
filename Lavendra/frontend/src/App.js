@@ -326,6 +326,7 @@ function App() {
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/adminpaymentview" element={<AdminPaymentView />} />
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
