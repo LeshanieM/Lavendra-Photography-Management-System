@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
-import userRouter from './routes/userRoutes.js';
+import userRouter from './routes/userRouteOld.js';
 import orderRouter from './routes/orderRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import inquiryRoutes from './routes/inquiryRoutes.js';
@@ -13,6 +13,10 @@ import reviewRouter from './routes/ReviewRoute.js';
 import deliveryRoutes from './routes/deliveryRoutes.js';
 import { Server } from 'socket.io';
 import http from 'http';
+import userRoutes from './routes/userRoutes.js';
+import authMiddleware from './middleware/auth.js';
+import authRoutes from './routes/auth.js';
+
 
 dotenv.config();
 
@@ -24,6 +28,8 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
+  const { auth, isAdmin, isPhotographer, isUser } = authMiddleware;
+
 
 const app = express();
 const server = http.createServer(app);
@@ -72,6 +78,8 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/reviews', reviewRouter);
 app.use('/api/deliveries', deliveryRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });

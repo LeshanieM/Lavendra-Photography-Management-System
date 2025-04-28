@@ -43,7 +43,6 @@ import MapComponent from './components/delivery/MapComponent';
 import DeliveryPage from './components/delivery/DeliveryPage';
 import DeliveryForm from './components/delivery/DeliveryForm';
 import CustomerTracking from './components/delivery/CustomerTracking';
-import AdminLogin from './AdminLogin';
 
 import Team from './scenes/team';
 import Contacts from './scenes/contacts';
@@ -54,6 +53,16 @@ import Pie from './scenes/pie';
 import FAQ from './scenes/faq/faq';
 import UserInquiriesPage from './components/userInquiriesPage';
 import AdminPaymentView from './components/AdminPaymentView';
+
+
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Log from './pages/SigninScreen';
+import Register from './pages/SignupScreen';
+import AdminDashboard from './pages/AdminDashboard';
+import PhotographerHome from './pages/PhotographerHome';
+import UserHome from './pages/UserHome';
+import Profile from './pages/Profile';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -87,6 +96,7 @@ function App() {
 
   return (
     <BrowserRouter>
+     <AuthProvider>
       <div
         className={
           sidebarIsOpen
@@ -97,7 +107,9 @@ function App() {
         <ToastContainer position="bottom-center" limit={1} />
         {/* Fixed header */}
         <header className="header paddingSet">
-          <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar className="animated-navbar" variant="dark" expand="lg">
+
+
             <Container className="mt-3">
               <Button
                 variant="dark"
@@ -132,28 +144,27 @@ function App() {
                       </Badge>
                     )}
                   </Link>
-                  <Link to="/create-package" className="nav-link">
-                    Create Package
-                  </Link>
-                  <Link to="/PaymentList" className="nav-link">
-                    Payments
-                  </Link>
+                 
+                 
                   <Link to="/inquiryForm" className="nav-link">
                     Inquiry Form
                   </Link>
-                  <Link to="/userinquirypage" className="nav-link">
-                    Inquiry Dashboard
+
+
+                  <Link to="/addReview" className="nav-link">
+                  Review Form
                   </Link>
 
-                  <Link to="/adminLogin" className="nav-link">
-                    adminLogin
+
+                 
+                  <Link to="/login" className="nav-link">
+                  Login 
                   </Link>
+
 
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </LinkContainer>
+                     
                       <LinkContainer to="/orderhistory">
                         <NavDropdown.Item>Order History</NavDropdown.Item>
                       </LinkContainer>
@@ -168,7 +179,7 @@ function App() {
                     </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
-                      Sign In
+                      User
                     </Link>
                   )}
                 </Nav>
@@ -184,20 +195,12 @@ function App() {
               : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
           }
         >
-          <Nav className="flex-column text-white w-100 p-2">
+          <Nav className="flex-column text-white w-100 p-2" >
             <Nav.Item>
               <strong>Categories</strong>
             </Nav.Item>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/product"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Packages</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-
+            
             <Nav.Item>
               <LinkContainer
                 to="/calendar"
@@ -209,37 +212,13 @@ function App() {
 
             <Nav.Item>
               <LinkContainer
-                to="/admin"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Admin</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-
-            <Nav.Item>
-              <LinkContainer
-                to="/custom"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>customize your Package</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-            <Nav.Item>
-              <LinkContainer
                 to="/reviews"
                 onClick={() => setSidebarIsOpen(false)}
               >
                 <Nav.Link>Reviews display</Nav.Link>
               </LinkContainer>
             </Nav.Item>
-            <Nav.Item>
-              <LinkContainer
-                to="/addReview"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Add Reviews</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+           
 
             <Nav.Item>
               <LinkContainer
@@ -281,6 +260,28 @@ function App() {
                 <Nav.Link>deliveries</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/userinquirypage"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Inquiry List</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/PaymentList"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Payment List</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+
+            
+
           </Nav>
         </div>
         <main>
@@ -305,7 +306,7 @@ function App() {
               <Route path="/paymentList" element={<PaymentList />}></Route>
               <Route path="/inquiryForm" element={<InquiryForm />}></Route>
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin1" element={<Admin />} />
               <Route path="/home" element={<Home />} />
               <Route path="/custom" element={<BookingForm />} />
               <Route path="/reviews" element={<ReviewDisplay />} />
@@ -315,7 +316,6 @@ function App() {
               <Route path="/deliveries" element={<DeliveryPage />} />
               <Route path="/add-delivery" element={<DeliveryForm />} />
               <Route path="/track-order" element={<CustomerTracking />} />
-              <Route path="/adminLogin" element={<AdminLogin />} />
 
               
               <Route path="/line" element={<Line />} />
@@ -327,6 +327,44 @@ function App() {
               <Route path="/pie" element={<Pie />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/adminpaymentview" element={<AdminPaymentView />} />
+             
+             
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Log />} />
+              <Route
+                  path="/admin/*"
+                  element={
+                    <PrivateRoute role="admin">
+                      <AdminDashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/photographer/*"
+                  element={
+                    <PrivateRoute role="photographer">
+                      <PhotographerHome />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/user/*"
+                  element={
+                    <PrivateRoute role="user">
+                      <UserHome />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <Profile />
+                    </PrivateRoute>
+                  }
+                />
+
+
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
@@ -353,6 +391,7 @@ function App() {
           <div className="text-center"> All rights reserved</div>
         </footer>
       </div>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AdminHeader from '../pages/AdminHeader';
 import {
   Typography,
   CircularProgress,
@@ -69,9 +70,9 @@ const AdminPaymentView = () => {
   useEffect(() => {
     let result = [...payments];
     
-    // Status filter
-    //if (tabValue === 1) result = result.filter(pmt => pmt.paymentStatus === 'pending');
-    //if (tabValue === 2) result = result.filter(pmt => pmt.paymentStatus === 'completed');
+    // Status filter (enabled for pending/completed payments)
+    if (tabValue === 1) result = result.filter(pmt => pmt.paymentStatus === 'pending');
+    if (tabValue === 2) result = result.filter(pmt => pmt.paymentStatus === 'completed');
     
     // Search filter
     if (search) {
@@ -194,13 +195,17 @@ const AdminPaymentView = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <CircularProgress />
-      </Box>
+      
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <CircularProgress />
+        </Box>
+   
     );
   }
 
   return (
+    <div  className="min-h-screen bg-gray-100">
+        <AdminHeader />
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box p={4}>
         <Typography variant="h4" gutterBottom>Admin Payment Dashboard</Typography>
@@ -208,6 +213,8 @@ const AdminPaymentView = () => {
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Tabs value={tabValue} onChange={handleTabChange}>
             <Tab label="All" />
+            <Tab label="Pending" />
+            <Tab label="Completed" />
           </Tabs>
           <Button 
             variant="contained" 
@@ -306,6 +313,7 @@ const AdminPaymentView = () => {
         </Snackbar>
       </Box>
     </LocalizationProvider>
+    </div>
   );
 };
 
