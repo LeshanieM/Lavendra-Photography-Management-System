@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import { TextField, Button, CircularProgress, Typography, Box, InputAdornment } from '@mui/material';
-import { Store } from '../Store'; // Import your context
+import { Store } from '../Store'; 
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -71,7 +71,7 @@ const handleEmailChange = (e) => {
         }
       );
 
-      // Step 2: Confirm the payment
+      //Confirm the payment
       const cardElement = elements.getElement(CardElement);
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -88,12 +88,12 @@ const handleEmailChange = (e) => {
       } else if (paymentIntent.status === 'succeeded') {
         setMessage('Payment successful!');
 
-        // Step 3: Call the /pay route to update the order status
+        // Call the /pay route to update the order status
         await axios.put(
           `${process.env.REACT_APP_API_URL}/api/orders/${order._id}/pay`, // Call the /pay route
           {
             id: paymentIntent.id, // Payment intent ID
-            status: paymentIntent.status, // Payment status (e.g., 'succeeded')
+            status: paymentIntent.status, // Payment status 
             update_time: new Date().toISOString(), // Timestamp of payment
             email_address: email, // Customer email
           },
@@ -102,7 +102,7 @@ const handleEmailChange = (e) => {
           }
         );
 
-        // Step 4: Store payment details (optional)
+        // Store payment details 
         await axios.post(
           `${process.env.REACT_APP_API_URL}/api/payments/store-payment`,
           {

@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useState } from 'react';
-//import data from '../data'
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,8 +6,8 @@ import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-
-//import logger from 'use-reducer-logger'
+import Container from 'react-bootstrap/Container';
+import '../index.css';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,13 +21,14 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
     error: '',
   });
-  //const [products, setProducts] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -38,32 +38,42 @@ function HomeScreen() {
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: err.message });
       }
-
-      //setProducts(result.data);
     };
     fetchData();
   }, []);
+
   return (
-    <div>
+    <div className="py-3">
       <Helmet>
-        <title> Greenify</title>
+        <title>Lavendra</title>
       </Helmet>
-      <h1>Featured Products </h1>
-      <div className="products">
+      <Container>
+        <h1
+          style={{
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginTop: '1rem',
+            marginBottom: '1rem',
+          }}
+        >
+          Featured Packages
+        </h1>
+
         {loading ? (
-       <LoadingBox/>
+          <LoadingBox />
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((product) => (
               <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                <Product product={product}></Product>
+                <Product product={product} />
               </Col>
             ))}
           </Row>
         )}
-      </div>
+      </Container>
     </div>
   );
 }

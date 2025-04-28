@@ -11,7 +11,7 @@ import axios from 'axios';
  import MessageBox from '../components/MessageBox';
  import { Store } from '../Store';
  import { getError } from '../utils';
- 
+ import Button from 'react-bootstrap/esm/Button';
 
 
  
@@ -176,7 +176,7 @@ import axios from 'axios';
                </ListGroup>
              </Card.Body>
            </Card>
-            <button onClick={handleCheckout}>Checkout Using Stripe</button>
+            <Button onClick={handleCheckout}>Checkout Using Stripe</Button>
          </Col>
        </Row>
      </div>
