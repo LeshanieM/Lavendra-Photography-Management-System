@@ -6,38 +6,7 @@ dotenv.config();
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-/*
-// Create Payment Intent
-router.post('/create-payment-intent', async (req, res) => {
-    try {
-        const { amount, currency, customerEmail, description } = req.body;
 
-        // Validate amount
-        if (!amount || isNaN(amount)) {
-            return res.status(400).send({ error: 'Invalid amount' });
-        }
-
-        // Convert amount to cents
-        const amountInCents = Math.round(parseFloat(amount) * 100);
-
-        // Create payment intent
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: amountInCents,
-            currency: currency || 'usd',
-            automatic_payment_methods: { enabled: true },
-            description: description || 'Lavendra Photography Services',
-            metadata: { customerEmail }
-        });
-
-        res.send({
-            clientSecret: paymentIntent.client_secret,
-            paymentIntentId: paymentIntent.id
-        });
-    } catch (error) {
-        console.error('Error creating payment intent:', error);
-        res.status(500).send({ error: error.message });
-    }
-});*/
 // Create Payment Intent
 router.post('/create-payment-intent', async (req, res) => {
     try {

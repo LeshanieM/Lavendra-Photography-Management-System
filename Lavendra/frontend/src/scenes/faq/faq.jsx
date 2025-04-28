@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
 
+
 const FAQ = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

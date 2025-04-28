@@ -34,6 +34,35 @@ import InquiryDashboard from './components/InquiryDashboard';
 import Calendar from './Calendar';
 import HeroPage from './components/HeroPage';
 import Admin from './Admin';
+import Home from './components/Home';
+import BookingForm from './components/BookingForm';
+import UpdateReviewPage from './components/UpdateReviewPage';
+import ReviewForm from './components/ReviewForm';
+import ReviewDisplay from './components/ReviewDisplay';
+import MapComponent from './components/delivery/MapComponent';
+import DeliveryPage from './components/delivery/DeliveryPage';
+import DeliveryForm from './components/delivery/DeliveryForm';
+import CustomerTracking from './components/delivery/CustomerTracking';
+
+import Team from './scenes/team';
+import Contacts from './scenes/contacts';
+import Bar from './scenes/bar';
+import Form from './scenes/form';
+import Line from './scenes/line';
+import Pie from './scenes/pie';
+import FAQ from './scenes/faq/faq';
+import UserInquiriesPage from './components/userInquiriesPage';
+import AdminPaymentView from './components/AdminPaymentView';
+
+
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Log from './pages/SigninScreen';
+import Register from './pages/SignupScreen';
+import AdminDashboard from './pages/AdminDashboard';
+import PhotographerHome from './pages/PhotographerHome';
+import UserHome from './pages/UserHome';
+import Profile from './pages/Profile';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -67,6 +96,7 @@ function App() {
 
   return (
     <BrowserRouter>
+     <AuthProvider>
       <div
         className={
           sidebarIsOpen
@@ -77,7 +107,9 @@ function App() {
         <ToastContainer position="bottom-center" limit={1} />
         {/* Fixed header */}
         <header className="header paddingSet">
-          <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar className="animated-navbar" variant="dark" expand="lg">
+
+
             <Container className="mt-3">
               <Button
                 variant="dark"
@@ -87,7 +119,7 @@ function App() {
               </Button>
 
               {/* Logo Image in the Navbar */}
-              <LinkContainer to="/">
+              <LinkContainer to="/product">
                 <Navbar.Brand>
                   <img
                     src="/images/logo.png"
@@ -96,7 +128,7 @@ function App() {
                   />
                 </Navbar.Brand>
               </LinkContainer>
-              <LinkContainer to="/">
+              <LinkContainer to="/product">
                 <Navbar.Brand>Lavendra</Navbar.Brand>
               </LinkContainer>
 
@@ -112,27 +144,27 @@ function App() {
                       </Badge>
                     )}
                   </Link>
-                  <Link to="/create-package" className="nav-link">
-                    Create Package
-                  </Link>
-                  <Link to="/PaymentList" className="nav-link">
-                    Payments
-                  </Link>
+                 
+                 
                   <Link to="/inquiryForm" className="nav-link">
                     Inquiry Form
                   </Link>
-                  <Link to="/inquiryDashboard" className="nav-link">
-                    Inquiry Dashboard
+
+
+                  <Link to="/addReview" className="nav-link">
+                  Review Form
                   </Link>
-                  <Link to="/hero" className="nav-link">
-                    heropage
+
+
+                 
+                  <Link to="/login" className="nav-link">
+                  Login 
                   </Link>
+
 
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </LinkContainer>
+                     
                       <LinkContainer to="/orderhistory">
                         <NavDropdown.Item>Order History</NavDropdown.Item>
                       </LinkContainer>
@@ -147,7 +179,7 @@ function App() {
                     </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
-                      Sign In
+                      User
                     </Link>
                   )}
                 </Nav>
@@ -163,20 +195,12 @@ function App() {
               : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
           }
         >
-          <Nav className="flex-column text-white w-100 p-2">
+          <Nav className="flex-column text-white w-100 p-2" >
             <Nav.Item>
               <strong>Categories</strong>
             </Nav.Item>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/product"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Packages</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-
+            
             <Nav.Item>
               <LinkContainer
                 to="/calendar"
@@ -188,12 +212,76 @@ function App() {
 
             <Nav.Item>
               <LinkContainer
-                to="/admin"
+                to="/reviews"
                 onClick={() => setSidebarIsOpen(false)}
               >
-                <Nav.Link>Admin</Nav.Link>
+                <Nav.Link>Reviews display</Nav.Link>
               </LinkContainer>
             </Nav.Item>
+           
+
+            <Nav.Item>
+              <LinkContainer
+                to="/update-review"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Update review</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer to="/Map" onClick={() => setSidebarIsOpen(false)}>
+                <Nav.Link>Map</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/track-order"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>track-order</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer
+                to="/add-delivery"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link> add delivery</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/deliveries"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>deliveries</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/userinquirypage"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Inquiry List</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer
+                to="/PaymentList"
+                onClick={() => setSidebarIsOpen(false)}
+              >
+                <Nav.Link>Payment List</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+
+            
+
           </Nav>
         </div>
         <main>
@@ -218,18 +306,84 @@ function App() {
               <Route path="/paymentList" element={<PaymentList />}></Route>
               <Route path="/inquiryForm" element={<InquiryForm />}></Route>
               <Route path="/calendar" element={<Calendar />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin1" element={<Admin />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/custom" element={<BookingForm />} />
+              <Route path="/reviews" element={<ReviewDisplay />} />
+              <Route path="/addReview" element={<ReviewForm />} />
+              <Route path="/update-review" element={<UpdateReviewPage />} />
+              <Route path="/Map" element={<MapComponent />} />
+              <Route path="/deliveries" element={<DeliveryPage />} />
+              <Route path="/add-delivery" element={<DeliveryForm />} />
+              <Route path="/track-order" element={<CustomerTracking />} />
+
+              
+              <Route path="/line" element={<Line />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/invoices" element={< PaymentList/>} />
+              <Route path="/form" element={<Form />} />
+              <Route path="/bar" element={<Bar />} />
+              <Route path="/pie" element={<Pie />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/adminpaymentview" element={<AdminPaymentView />} />
+             
+             
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Log />} />
+              <Route
+                  path="/admin/*"
+                  element={
+                    <PrivateRoute role="admin">
+                      <AdminDashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/photographer/*"
+                  element={
+                    <PrivateRoute role="photographer">
+                      <PhotographerHome />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/user/*"
+                  element={
+                    <PrivateRoute role="user">
+                      <UserHome />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <Profile />
+                    </PrivateRoute>
+                  }
+                />
+
+
               <Route
                 path="/inquiryDashboard"
                 element={<InquiryDashboard />}
+              ></Route>
+              <Route
+                path="/userinquirypage"
+                element={<UserInquiriesPage />}
+              ></Route>
+              <Route
+                path="/adminpaymentview"
+                element={<AdminPaymentView />}
               ></Route>
               <Route
                 path="/orderhistory"
                 element={<OrderHistoryScreen />}
               ></Route>
               <Route path="/create-package" element={<CreatePackageScreen />} />{' '}
-              {/* Add this route */}
-              <Route path="/" element={<HomeScreen />} />
+              {/* Add  route */}
+              <Route path="/" element={<HeroPage />} />
             </Routes>
           </Container>
         </main>
@@ -237,6 +391,7 @@ function App() {
           <div className="text-center"> All rights reserved</div>
         </footer>
       </div>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

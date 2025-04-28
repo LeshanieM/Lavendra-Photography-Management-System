@@ -12,6 +12,7 @@ import {
     Select,
     MenuItem
 } from '@mui/material';
+import emailjs from '@emailjs/browser';
 
 const UpdateInquiryForm = ({ inquiry, onClose, fetchInquiries }) => {
     const [formData, setFormData] = useState({
@@ -41,6 +42,24 @@ const UpdateInquiryForm = ({ inquiry, onClose, fetchInquiries }) => {
             });
 
             if (response.ok) {
+                // Send auto-response email to user
+                const templateParams = {
+                    id: inquiry._id,
+                    name: inquiry.name,
+                    email: inquiry.email,
+                    status: formData.status,
+                };
+    
+                emailjs.send(
+                    'service_ibuxp0v',          // Replace with your EmailJS service ID
+                    'template_9b02vc9',          // Replace with your EmailJS template ID for status update
+                    templateParams,
+                    'T4LHQzJ8ui9jA8kKM'           // Replace with your EmailJS public key
+                ).then((result) => {
+                    console.log('Auto-response sent:', result.text);
+                }).catch((error) => {
+                    console.error('Error sending email:', error);
+                });
                 fetchInquiries(); // Refresh the list
                 onClose(); // Close dialog
             } else {
