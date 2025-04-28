@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AdminHeader from '../../pages/AdminHeader';
+
 
 const DeliveryPage = () => {
   const [deliveries, setDeliveries] = useState([]);
@@ -95,6 +97,8 @@ const DeliveryPage = () => {
   }
 
   return (
+    <div  className="min-h-screen bg-gray-100">
+                  <AdminHeader />
     <div className="delivery-container" style={{ padding: "20px" }}>
       <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
         Delivery Details
@@ -281,6 +285,7 @@ const DeliveryPage = () => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };

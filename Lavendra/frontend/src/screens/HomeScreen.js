@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';  // Import Button from react-bootstrap
+import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
 import '../index.css';
 
 const reducer = (state, action) => {
@@ -29,6 +31,8 @@ function HomeScreen() {
     error: '',
   });
 
+  const navigate = useNavigate();  // Initialize the navigate function
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -42,23 +46,32 @@ function HomeScreen() {
     fetchData();
   }, []);
 
+  const handleCustomizeClick = () => {
+    navigate('/custom');  // Navigate to /custom when the button is clicked
+  };
+
   return (
     <div className="py-3">
       <Helmet>
         <title>Lavendra</title>
       </Helmet>
       <Container>
-        <h1
-          style={{
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginTop: '1rem',
-            marginBottom: '1rem',
-          }}
-        >
-          Featured Packages
-        </h1>
+        <div className="d-flex justify-content-between align-items-center">
+          <h1
+            style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            }}
+          >
+            Featured Packages
+          </h1>
+          <Button variant="primary" style={{ marginLeft: '10px' }} onClick={handleCustomizeClick}>
+            Customize Packages
+          </Button>
+        </div>
 
         {loading ? (
           <LoadingBox />

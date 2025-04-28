@@ -43,6 +43,7 @@
     "react-to-print": "^3.0.5",
     "react-toastify": "^11.0.5",
     "socket.io-client": "^4.8.1",
+    "sweetalert2": "^11.19.1",
     "web-vitals": "^4.2.4",
     "xlsx": "^0.18.5",
     "yup": "^1.6.1"

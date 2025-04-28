@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.animated-navbar {
+  background: linear-gradient(270deg, #3a3a3a, #1c1c1c, #3a3a3a); /* Shades of black */
+  background-size: 600% 600%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
