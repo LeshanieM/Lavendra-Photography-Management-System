@@ -73,6 +73,7 @@ function HomePage() {
                     borderColor: '#6a1b9a',
                     borderRadius: '8px',
                   }}
+                  onClick={() => navigate('/contact')}
                 >
                   Contact Us
                 </button>
@@ -221,7 +222,7 @@ function HomePage() {
               borderRadius: '8px',
               boxShadow: '0 4px 15px rgba(106, 27, 154, 0.3)',
             }}
-            onClick={() => navigate('')}
+            onClick={() => navigate('/contact')}
           >
             Get in Touch
           </button>
