@@ -1,248 +1,240 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { FaTrash } from 'react-icons/fa'; // Import delete icon
-import '../styles.css';
+import { FaTrash, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import {
+  Button,
+  TextField,
+  Typography,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Snackbar,
+  Alert,
+  Card,
+  CardContent,
+  CardActions,
+  Stack
+} from '@mui/material';
 
 const UpdateReviewPage = () => {
   const [email, setEmail] = useState('');
-  const [review, setReview] = useState(null);
-  const [updatedReviewText, setUpdatedReviewText] = useState('');
-  const [updatedRating, setUpdatedRating] = useState(1);
-  const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+  const [editReview, setEditReview] = useState(null);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  // Handle search for review by email
+  const buttonStyle = {
+    backgroundColor: 'white',
+    '&:hover': { backgroundColor: '#f0f0f0' },
+  };
+
+  // Search reviews by email
   const handleSearchByEmail = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.get(
-        `http://localhost:5000/reviews/email/${email}`
-      );
-
-      if (response.data.review) {
-        setReview(response.data.review);
-        setUpdatedReviewText(response.data.review.reviewText);
-        setUpdatedRating(response.data.review.rating);
-        alert('Review found successfully!');
+      const response = await axios.get(`http://localhost:5000/reviews/email/${email}`);
+      if (response.data.reviews && response.data.reviews.length > 0) {
+        setReviews(response.data.reviews);
+        setSnackbarMessage('Reviews found successfully!');
       } else {
-        alert('Review not found with this email.');
+        setReviews([]);
+        setSnackbarMessage('No reviews found for this email.');
       }
     } catch (error) {
-      alert('Error fetching review. Please try again.');
+      setReviews([]);
+      setSnackbarMessage('Error fetching reviews. Please try again.');
+    } finally {
+      setOpenSnackbar(true);
     }
   };
 
-  // Handle update review
-  const handleUpdateReview = async (e) => {
-    e.preventDefault();
-
-    if (!updatedReviewText || !updatedRating) {
-      alert('Review text and rating are required.');
-      return;
-    }
-
-    const updatedReviewData = {
-      reviewText: updatedReviewText,
-      rating: updatedRating,
-    };
-
+  // Save edited review
+  const handleSaveEdit = async () => {
+    if (!editReview) return;
     try {
-      const response = await axios.put(
-        `http://localhost:5000/reviews/email/${email}`,
-        updatedReviewData
+      await axios.put(`http://localhost:5000/reviews/${editReview._id}`, {
+        reviewText: editReview.reviewText,
+        rating: editReview.rating,
+      });
+      setReviews(prev =>
+        prev.map((r) => (r._id === editReview._id ? editReview : r))
       );
-      alert(response.data.message || 'Review updated successfully!');
+      setEditReview(null);
+      setSnackbarMessage('Review updated successfully!');
     } catch (error) {
-      alert('Error updating review. Please try again.');
+      setSnackbarMessage('Error updating review. Please try again.');
+    } finally {
+      setOpenSnackbar(true);
     }
   };
 
-  // Handle delete with confirm box
-  const handleDeleteReview = async () => {
-    const confirmDelete = window.confirm(
-      'Are you sure you want to delete this review?'
-    );
-
-    if (!confirmDelete) return; // Exit if user cancels
+  // Delete a review
+  const handleDeleteReview = async (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this review?');
+    if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/reviews/email/${email}`
-      );
-      alert(response.data.message || 'Review deleted successfully!');
-      setReview(null);
-      setUpdatedReviewText('');
-      setUpdatedRating(1);
+      await axios.delete(`http://localhost:5000/reviews/${id}`);
+      setReviews(prev => prev.filter((r) => r._id !== id));
+      setSnackbarMessage('Review deleted successfully!');
     } catch (error) {
-      alert('Error deleting review. Please try again.');
+      setSnackbarMessage('Error deleting review. Please try again.');
+    } finally {
+      setOpenSnackbar(true);
     }
   };
 
   return (
-    <div
-      className="update-review-page"
-      style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '20px',
-        backgroundColor: '#f9f9f9',
-        borderRadius: '8px',
-      }}
-    >
-      <h1
-        style={{
-          color: '#000000',
-          textAlign: 'center',
-          marginBottom: '1.5rem',
-          fontSize: '2rem',
-          fontWeight: '600',
-          textTransform: 'uppercase',
-          letterSpacing: '1px',
-        }}
-      >
+    <Box sx={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <Typography variant="h4" align="center" gutterBottom>
         My Reviews
-      </h1>
+      </Typography>
 
       {/* Search Form */}
-      <form
+      <Box
+        component="form"
         onSubmit={handleSearchByEmail}
-        className="my-reviews-container"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        }}
+        sx={{ backgroundColor: '#f8f8f8', padding: 3, borderRadius: 2, mb: 4 }}
       >
-        <p id="search-email-sentence">Search your Email here</p>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="email-field"
-            style={{
-              width: '95%',
-              padding: '10px',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-            }}
-          />
-        </div>
-        <button
-          className="button_1"
+        <TextField
+          label="Enter Your Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          fullWidth
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <Button
           type="submit"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#3057cc',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontSize: '1rem',
+          variant="contained"
+          fullWidth
+          sx={{
+            backgroundColor: '#6a1b9a',
+            '&:hover': { backgroundColor: '#5e178a' },
           }}
         >
-          Search
-        </button>
-      </form>
+          Search Reviews
+        </Button>
+      </Box>
 
-      {/* If a review is found, show it and allow update/delete */}
-      {review && (
-        <div className="review-details">
-          <h2
-            style={{
-              color: '#3057cc',
-              textAlign: 'center',
-              marginBottom: '1.5rem',
-            }}
-          >
-            Your Review
-          </h2>
+      {/* Reviews List */}
+      {reviews.length > 0 && (
+        <Stack spacing={3}>
+          {reviews.map((review) => (
+            <Card key={review._id} sx={{ backgroundColor: '#f8f8f8' }}>
+              <CardContent>
+                {editReview && editReview._id === review._id ? (
+                  <>
+                    <TextField
+                      label="Edit Review Text"
+                      value={editReview.reviewText}
+                      onChange={(e) =>
+                        setEditReview({ ...editReview, reviewText: e.target.value })
+                      }
+                      required
+                      fullWidth
+                      multiline
+                      rows={3}
+                      sx={{ mb: 2 }}
+                    />
 
-          <form onSubmit={handleUpdateReview}>
-            <div>
-              <label>Update Review Text:</label>
-              <br />
-              <textarea
-                value={updatedReviewText}
-                onChange={(e) => setUpdatedReviewText(e.target.value)}
-                required
-                className="updated-review-textarea"
-                style={{
-                  width: '95%',
-                  padding: '10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '5px',
-                  fontSize: '1rem',
-                }}
-              ></textarea>
-            </div>
-            <div>
-              <label>Update Rating:</label>
-              <br />
-              <select
-                value={updatedRating}
-                onChange={(e) => setUpdatedRating(Number(e.target.value))}
-                required
-                className="rating-dropdown"
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '5px',
-                  fontSize: '1rem',
-                }}
-              >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </select>
-            </div>
+                    <FormControl fullWidth sx={{ mb: 2 }}>
+                      <InputLabel>Rating</InputLabel>
+                      <Select
+                        value={editReview.rating}
+                        label="Rating"
+                        onChange={(e) =>
+                          setEditReview({ ...editReview, rating: Number(e.target.value) })
+                        }
+                      >
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <MenuItem key={value} value={value}>
+                            {value}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="subtitle1"><strong>Name:</strong> {review.name}</Typography>
+                    <Typography variant="subtitle2"><strong>Email:</strong> {review.email}</Typography>
+                    <Typography variant="body1" sx={{ mt: 1 }}><strong>Review:</strong> {review.reviewText}</Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}><strong>Rating:</strong> {review.rating}</Typography>
+                  </>
+                )}
+              </CardContent>
 
-            <button
-              className="button_1"
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#3057cc',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                width: '100%',
-              }}
-            >
-              Update
-            </button>
-          </form>
-
-          <button
-            onClick={handleDeleteReview}
-            className="icon-btn"
-            style={{
-              width: '40px',
-              height: '40px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '1.2rem',
-              margin: '5px',
-              backgroundColor: '#DC3545',
-              color: 'white',
-            }}
-          >
-            <FaTrash />
-          </button>
-        </div>
+              <CardActions>
+                {editReview && editReview._id === review._id ? (
+                  <>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      startIcon={<FaSave />}
+                      onClick={handleSaveEdit}
+                      fullWidth
+                      sx={buttonStyle}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      startIcon={<FaTimes />}
+                      onClick={() => setEditReview(null)}
+                      fullWidth
+                      sx={buttonStyle}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      startIcon={<FaEdit />}
+                      onClick={() => setEditReview(review)}
+                      fullWidth
+                      sx={buttonStyle}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      size="small"
+                      startIcon={<FaTrash />}
+                      onClick={() => handleDeleteReview(review._id)}
+                      fullWidth
+                      sx={buttonStyle}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
+              </CardActions>
+            </Card>
+          ))}
+        </Stack>
       )}
-    </div>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity="info" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 };
 

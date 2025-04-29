@@ -43,6 +43,7 @@ import MapComponent from './components/delivery/MapComponent';
 import DeliveryPage from './components/delivery/DeliveryPage';
 import DeliveryForm from './components/delivery/DeliveryForm';
 import CustomerTracking from './components/delivery/CustomerTracking';
+import OrderSuccess from './components/delivery/OrderSuccess';
 
 import Team from './scenes/team';
 import Contacts from './scenes/contacts';
@@ -54,7 +55,6 @@ import FAQ from './scenes/faq/faq';
 import UserInquiriesPage from './components/userInquiriesPage';
 import AdminPaymentView from './components/AdminPaymentView';
 
-
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Log from './pages/SigninScreen';
@@ -63,6 +63,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import PhotographerHome from './pages/PhotographerHome';
 import UserHome from './pages/UserHome';
 import Profile from './pages/Profile';
+import AddBlog from './components/AddBlog';
+import ViewBlogs from './components/ViewBlogs';
+import ManageBlogs from './components/ManageBlogs';
+import EditBlog from './components/EditBlog';
 
 const stripePromise = loadStripe(
   'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
@@ -96,242 +100,324 @@ function App() {
 
   return (
     <BrowserRouter>
-     <AuthProvider>
-      <div
-        className={
-          sidebarIsOpen
-            ? 'd-flex flex-column site-container active-cont'
-            : 'd-flex flex-column site-container'
-        }
-      >
-        <ToastContainer position="bottom-center" limit={1} />
-        {/* Fixed header */}
-        <header className="header paddingSet">
-        <Navbar className="animated-navbar" variant="dark" expand="lg">
-
-
-            <Container className="mt-3">
-              <Button
-                variant="dark"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-              >
-                <i className="fas fa-bars"></i>
-              </Button>
-
-              {/* Logo Image in the Navbar */}
-              <LinkContainer to="/product">
-                <Navbar.Brand>
-                  <img
-                    src="/images/logo.png"
-                    alt="Lavendra Logo"
-                    style={{ height: '80px', width: 'auto' }}
-                  />
-                </Navbar.Brand>
-              </LinkContainer>
-              <LinkContainer to="/product">
-                <Navbar.Brand>Lavendra</Navbar.Brand>
-              </LinkContainer>
-
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <SearchBox />
-                <Nav className="me-auto  w-100  justify-content-end">
-                  <Link to="/cart" className="nav-link">
-                    Cart
-                    {cart.cartItems.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                      </Badge>
-                    )}
-                  </Link>
-                 
-                 
-                  <Link to="/inquiryForm" className="nav-link">
-                    Inquiry Form
-                  </Link>
-
-
-                  <Link to="/addReview" className="nav-link">
-                  Review Form
-                  </Link>
-
-
-                 
-                  <Link to="/login" className="nav-link">
-                  Login 
-                  </Link>
-
-
-                  {userInfo ? (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                     
-                      <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Divider />
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signoutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown>
-                  ) : (
-                    <Link className="nav-link" to="/signin">
-                      User
-                    </Link>
-                  )}
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-        </header>
+      <AuthProvider>
         <div
-          //sidebar
           className={
             sidebarIsOpen
-              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
-              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
+              ? 'd-flex flex-column site-container active-cont'
+              : 'd-flex flex-column site-container'
           }
         >
-          <Nav className="flex-column text-white w-100 p-2" >
-            <Nav.Item>
-              <strong>Categories</strong>
-            </Nav.Item>
-
-            
-            <Nav.Item>
-              <LinkContainer
-                to="/calendar"
-                onClick={() => setSidebarIsOpen(false)}
+          <ToastContainer position="bottom-center" limit={1} />
+          {/* Fixed header */}
+          <header className="header paddingSet">
+            <nav
+              style={{
+                backgroundColor: '#343a40', // Dark background for navbar
+                color: 'white',
+                boxShadow: '0 4px 2px -2px gray',
+                padding: '15px 20px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
               >
-                <Nav.Link>Calendar</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                <button
+                  style={{
+                    backgroundColor: '#343a40',
+                    color: 'white',
+                    padding: '8px 16px',
+                    border: 'none',
+                    borderRadius: '4px',
+                  }}
+                  onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+                >
+                  <i className="fas fa-bars"></i>
+                </button>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/reviews"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Reviews display</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-           
+                {/* Logo Image in the Navbar */}
+                <LinkContainer to="/product">
+                  <div>
+                    <img
+                      src="/images/logo.png"
+                      alt="Lavendra Logo"
+                      style={{ height: '80px', width: 'auto' }}
+                    />
+                  </div>
+                </LinkContainer>
+                <LinkContainer to="/product">
+                  <div
+                    style={{
+                      fontSize: '24px',
+                      fontWeight: 'bold',
+                      marginLeft: '10px',
+                    }}
+                  >
+                    Lavendra
+                  </div>
+                </LinkContainer>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/update-review"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Update review</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                <div>
+                  <SearchBox />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Link
+                      to="/cart"
+                      style={{
+                        color: 'white',
+                        textDecoration: 'none',
+                        paddingRight: '20px',
+                      }}
+                    >
+                      Cart
+                      {cart.cartItems.length > 0 && (
+                        <span
+                          style={{
+                            backgroundColor: 'red',
+                            color: 'white',
+                            borderRadius: '50%',
+                            padding: '5px 10px',
+                            fontSize: '12px',
+                            marginLeft: '5px',
+                          }}
+                        >
+                          {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                        </span>
+                      )}
+                    </Link>
 
-            <Nav.Item>
-              <LinkContainer to="/Map" onClick={() => setSidebarIsOpen(false)}>
-                <Nav.Link>Map</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                    <Link
+                      to="/inquiryForm"
+                      style={{
+                        color: 'white',
+                        textDecoration: 'none',
+                        paddingRight: '20px',
+                      }}
+                    >
+                      Inquiry Form
+                    </Link>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/track-order"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>track-order</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-            <Nav.Item>
-              <LinkContainer
-                to="/add-delivery"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link> add delivery</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                    <Link
+                      to="/reviews"
+                      style={{
+                        color: 'white',
+                        textDecoration: 'none',
+                        paddingRight: '20px',
+                      }}
+                    >
+                      Reviews
+                    </Link>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/deliveries"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>deliveries</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                    <Link
+                      to="/view-blogs"
+                      style={{
+                        color: 'white',
+                        textDecoration: 'none',
+                        paddingRight: '20px',
+                      }}
+                    >
+                      Blogs
+                    </Link>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/userinquirypage"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Inquiry List</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                    <Link
+                      to="/login"
+                      style={{
+                        color: 'white',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      Login
+                    </Link>
 
-            <Nav.Item>
-              <LinkContainer
-                to="/PaymentList"
-                onClick={() => setSidebarIsOpen(false)}
-              >
-                <Nav.Link>Payment List</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
+                    {userInfo ? (
+                      <div style={{ position: 'relative' }}>
+                        <button
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'white',
+                            cursor: 'pointer',
+                            paddingRight: '20px',
+                          }}
+                        >
+                          {userInfo.name}
+                        </button>
+                        <div
+                          style={{
+                            position: 'absolute',
+                            right: '0',
+                            top: '100%',
+                            backgroundColor: 'white',
+                            color: 'black',
+                            boxShadow: '0 4px 2px -2px gray',
+                            borderRadius: '4px',
+                            width: '150px',
+                            display: 'none',
+                          }}
+                        >
+                          <Link
+                            to="/orderhistory"
+                            style={{
+                              display: 'block',
+                              padding: '10px',
+                              fontSize: '14px',
+                              textDecoration: 'none',
+                              color: 'black',
+                            }}
+                          >
+                            Order History
+                          </Link>
+                          <hr />
+                          <button
+                            style={{
+                              display: 'block',
+                              width: '100%',
+                              padding: '10px',
+                              fontSize: '14px',
+                              textDecoration: 'none',
+                              color: 'red',
+                              backgroundColor: 'transparent',
+                              border: 'none',
+                              cursor: 'pointer',
+                            }}
+                            onClick={signoutHandler}
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        to="/signin"
+                        style={{
+                          color: 'white',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        User
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <div
+            //sidebar
+            className={
+              sidebarIsOpen
+                ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
+                : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
+            }
+          >
+            <Nav className="flex-column text-white w-100 p-2">
+              <Nav.Item>
+                <strong>Categories</strong>
+              </Nav.Item>
 
+              <Nav.Item>
+                <LinkContainer
+                  to="/calendar"
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>Calendar</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
 
-            
+              <Nav.Item>
+                <LinkContainer
+                  to="/track-order"
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>Track My Order</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+              <Nav.Item>
+                <LinkContainer
+                  to="/add-delivery"
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>Add Delivery</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
 
-          </Nav>
-        </div>
-        <main>
-          <Container className="mt-3">
-            <Elements stripe={stripePromise}>
+              <Nav.Item>
+                <LinkContainer
+                  to="/userinquirypage"
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>Inquiry List</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+
+              <Nav.Item>
+                <LinkContainer
+                  to="/PaymentList"
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  <Nav.Link>Payment List</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+            </Nav>
+          </div>
+          <main>
+            <Container className="mt-3">
+              <Elements stripe={stripePromise}>
+                <Routes>
+                  <Route path="/CheckoutForm" element={<CheckoutForm />} />
+                  <Route path="/payments" element={<PaymentList />} />
+                </Routes>
+              </Elements>
               <Routes>
-                <Route path="/CheckoutForm" element={<CheckoutForm />} />
-                <Route path="/payments" element={<PaymentList />} />
-              </Routes>
-            </Elements>
-            <Routes>
-              <Route path="/hero" element={<HeroPage />} />
-              <Route path="/product" element={<HomeScreen />} />
-              <Route path="/product/:slug" element={<ProductScreen />} />
-              <Route path="/cart" element={<CartScreen />} />
-              <Route path="/signin" element={<SigninScreen />} />
-              <Route path="/signup" element={<SignupScreen />} />
-              <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />}></Route>
-              <Route path="/shipping" element={<AddressScreen />} />
-              <Route path="/payment" element={<PaymentMethodScreen />}></Route>
-              <Route path="/paymentList" element={<PaymentList />}></Route>
-              <Route path="/inquiryForm" element={<InquiryForm />}></Route>
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/admin1" element={<Admin />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/custom" element={<BookingForm />} />
-              <Route path="/reviews" element={<ReviewDisplay />} />
-              <Route path="/addReview" element={<ReviewForm />} />
-              <Route path="/update-review" element={<UpdateReviewPage />} />
-              <Route path="/Map" element={<MapComponent />} />
-              <Route path="/deliveries" element={<DeliveryPage />} />
-              <Route path="/add-delivery" element={<DeliveryForm />} />
-              <Route path="/track-order" element={<CustomerTracking />} />
-
-              
-              <Route path="/line" element={<Line />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={< PaymentList/>} />
-              <Route path="/form" element={<Form />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/adminpaymentview" element={<AdminPaymentView />} />
-             
-             
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Log />} />
-              <Route
+                <Route path="/hero" element={<HeroPage />} />
+                <Route path="/product" element={<HomeScreen />} />
+                <Route path="/product/:slug" element={<ProductScreen />} />
+                <Route path="/cart" element={<CartScreen />} />
+                <Route path="/signin" element={<SigninScreen />} />
+                <Route path="/signup" element={<SignupScreen />} />
+                <Route path="/placeorder" element={<PlaceOrderScreen />} />
+                <Route path="/order/:id" element={<OrderScreen />}></Route>
+                <Route path="/shipping" element={<AddressScreen />} />
+                <Route
+                  path="/payment"
+                  element={<PaymentMethodScreen />}
+                ></Route>
+                <Route path="/paymentList" element={<PaymentList />}></Route>
+                <Route path="/inquiryForm" element={<InquiryForm />}></Route>
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/admin1" element={<Admin />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/custom" element={<BookingForm />} />
+                <Route path="/reviews" element={<ReviewDisplay />} />
+                <Route path="/addReview" element={<ReviewForm />} />
+                <Route path="/update-review" element={<UpdateReviewPage />} />
+                <Route path="/Map" element={<MapComponent />} />
+                <Route path="/deliveries" element={<DeliveryPage />} />
+                <Route path="/add-delivery" element={<DeliveryForm />} />
+                <Route path="/track-order" element={<CustomerTracking />} />
+                <Route path="/order-success" element={<OrderSuccess />} />
+                <Route path="/line" element={<Line />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/invoices" element={<PaymentList />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/pie" element={<Pie />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route
+                  path="/adminpaymentview"
+                  element={<AdminPaymentView />}
+                />
+                <Route path="/add-blog" element={<AddBlog />} />
+                <Route path="/view-blogs" element={<ViewBlogs />} />
+                <Route path="/manage-blogs" element={<ManageBlogs />} />
+                <Route path="/edit-blog/:id" element={<EditBlog />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Log />} />
+                <Route
                   path="/admin/*"
                   element={
                     <PrivateRoute role="admin">
@@ -363,34 +449,35 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-
-
-              <Route
-                path="/inquiryDashboard"
-                element={<InquiryDashboard />}
-              ></Route>
-              <Route
-                path="/userinquirypage"
-                element={<UserInquiriesPage />}
-              ></Route>
-              <Route
-                path="/adminpaymentview"
-                element={<AdminPaymentView />}
-              ></Route>
-              <Route
-                path="/orderhistory"
-                element={<OrderHistoryScreen />}
-              ></Route>
-              <Route path="/create-package" element={<CreatePackageScreen />} />{' '}
-              {/* Add  route */}
-              <Route path="/" element={<HeroPage />} />
-            </Routes>
-          </Container>
-        </main>
-        <footer>
-          <div className="text-center"> All rights reserved</div>
-        </footer>
-      </div>
+                <Route
+                  path="/inquiryDashboard"
+                  element={<InquiryDashboard />}
+                ></Route>
+                <Route
+                  path="/userinquirypage"
+                  element={<UserInquiriesPage />}
+                ></Route>
+                <Route
+                  path="/adminpaymentview"
+                  element={<AdminPaymentView />}
+                ></Route>
+                <Route
+                  path="/orderhistory"
+                  element={<OrderHistoryScreen />}
+                ></Route>
+                <Route
+                  path="/create-package"
+                  element={<CreatePackageScreen />}
+                />{' '}
+                {/* Add  route */}
+                <Route path="/" element={<HeroPage />} />
+              </Routes>
+            </Container>
+          </main>
+          <footer>
+            <div className="text-center"> All rights reserved</div>
+          </footer>
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

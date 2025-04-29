@@ -16,6 +16,8 @@ import http from 'http';
 import userRoutes from './routes/userRoutes.js';
 import authMiddleware from './middleware/auth.js';
 import authRoutes from './routes/auth.js';
+import blogRouter from './routes/BlogRoute.js';
+
 
 
 dotenv.config();
@@ -80,6 +82,10 @@ app.use('/reviews', reviewRouter);
 app.use('/api/deliveries', deliveryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+
+app.use('/blogs', blogRouter);
+app.use('/uploads', express.static('uploads'));
+
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
