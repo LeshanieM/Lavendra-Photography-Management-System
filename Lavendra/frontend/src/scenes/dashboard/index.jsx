@@ -12,10 +12,12 @@ import BarChart from '../../components/BarChart';
 import StatBox from '../../components/StatBox';
 import ProgressCircle from '../../components/ProgressCircle';
 import AdminHeader from '../../pages/AdminHeader';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen " style={{ color: 'black' }}>
@@ -26,18 +28,19 @@ const Dashboard = () => {
           <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
           <Box>
-            <Button
-              sx={{
-                backgroundColor: colors.blueAccent[700],
-                color: colors.grey[100],
-                fontSize: '14px',
-                fontWeight: 'bold',
-                padding: '10px 20px',
-              }}
-            >
-              <DownloadOutlinedIcon sx={{ mr: '10px' }} />
-              Download Reports
-            </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: '14px',
+              fontWeight: 'bold',
+              padding: '10px 20px',
+            }}
+            onClick={() => navigate('/admin')}
+          >
+            <DownloadOutlinedIcon sx={{ mr: '10px' }} />
+            Download Reports
+          </Button>
           </Box>
         </Box>
 
