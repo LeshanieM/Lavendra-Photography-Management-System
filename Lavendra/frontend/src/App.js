@@ -1,50 +1,50 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
-import CreatePackageScreen from "./screens/CreatePackageScreen"; // Import the CreatePackageScreen
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Badge from "react-bootstrap/Badge";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { LinkContainer } from "react-router-bootstrap";
-import "./index.css";
-import { useContext, useEffect, useState } from "react";
-import { Store } from "./Store";
-import CartScreen from "./screens/CartScreen";
-import SigninScreen from "./screens/SigninScreen";
-import AddressScreen from "./screens/PhotographyVenueScreen";
-import SignupScreen from "./screens/SignupScreen";
-import PaymentMethodScreen from "./screens/PaymentMethodScreen";
-import PlaceOrderScreen from "./screens/PlaceOrderScreen";
-import OrderScreen from "./screens/OrderScreen";
-import CheckoutForm from "./components/CheckoutForm";
-import PaymentList from "./components/PaymentList";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import OrderHistoryScreen from "./screens/OrderHistoryScreen";
-import Button from "react-bootstrap/Button";
-import { getError } from "./utils";
-import axios from "axios";
-import SearchBox from "./components/SearchBox";
-import InquiryForm from "./components/InquiryForm";
-import InquiryDashboard from "./components/InquiryDashboard";
-import Calendar from "./Calendar";
-import HeroPage from "./components/HeroPage";
-import Admin from "./Admin";
-import Home from "./components/Home";
-import ContactUsPage from "./components/ContactUsPage";
-import BookingForm from "./components/BookingForm";
-import UpdateReviewPage from "./components/UpdateReviewPage";
-import ReviewForm from "./components/ReviewForm";
-import ReviewDisplay from "./components/ReviewDisplay";
-import MapComponent from "./components/delivery/MapComponent";
-import DeliveryPage from "./components/delivery/DeliveryPage";
-import DeliveryForm from "./components/delivery/DeliveryForm";
-import CustomerTracking from "./components/delivery/CustomerTracking";
-import OrderSuccess from "./components/delivery/OrderSuccess";
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import CreatePackageScreen from './screens/CreatePackageScreen'; // Import the CreatePackageScreen
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Badge from 'react-bootstrap/Badge';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { LinkContainer } from 'react-router-bootstrap';
+import './index.css';
+import { useContext, useEffect, useState } from 'react';
+import { Store } from './Store';
+import CartScreen from './screens/CartScreen';
+import SigninScreen from './screens/SigninScreen';
+import AddressScreen from './screens/PhotographyVenueScreen';
+import SignupScreen from './screens/SignupScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
+import CheckoutForm from './components/CheckoutForm';
+import PaymentList from './components/PaymentList';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import Button from 'react-bootstrap/Button';
+import { getError } from './utils';
+import axios from 'axios';
+import SearchBox from './components/SearchBox';
+import InquiryForm from './components/InquiryForm';
+import InquiryDashboard from './components/InquiryDashboard';
+import Calendar from './Calendar';
+import HeroPage from './components/HeroPage';
+import Admin from './Admin';
+import Home from './components/Home';
+import ContactUsPage from './components/ContactUsPage';
+import BookingForm from './components/BookingForm';
+import UpdateReviewPage from './components/UpdateReviewPage';
+import ReviewForm from './components/ReviewForm';
+import ReviewDisplay from './components/ReviewDisplay';
+import MapComponent from './components/delivery/MapComponent';
+import DeliveryPage from './components/delivery/DeliveryPage';
+import DeliveryForm from './components/delivery/DeliveryForm';
+import CustomerTracking from './components/delivery/CustomerTracking';
+import OrderSuccess from './components/delivery/OrderSuccess';
 
 import Team from "./scenes/team";
 import Contacts from "./scenes/contacts";
@@ -68,6 +68,18 @@ import AddBlog from "./components/AddBlog";
 import ViewBlogs from "./components/ViewBlogs";
 import ManageBlogs from "./components/ManageBlogs";
 import EditBlog from "./components/EditBlog";
+
+
+import AdminPage from './pages/AdminGalleryPage';
+import UserPage from './pages/UserGalleryPage';
+
+
+
+import NoticeHome from "./components/notices/Home/Home";
+import AddNotice from "./components/notices/AddNotice/AddNotice";
+import Notices from "./components/notices/NoticeDetails/Notices";
+import UpdateNotice from "./components/notices/UpdateNotice/UpdateNotice";
+
 
 const stripePromise = loadStripe(
   "pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB"
@@ -106,8 +118,8 @@ function App() {
         <div
           className={
             sidebarIsOpen
-              ? "d-flex flex-column site-container active-cont"
-              : "d-flex flex-column site-container"
+              ? 'd-flex flex-column site-container active-cont'
+              : 'd-flex flex-column site-container'
           }
         >
           <ToastContainer position="bottom-center" limit={1} />
@@ -115,7 +127,7 @@ function App() {
           <header className="bg-gray-800 shadow-sm mb-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between h-20">
-                {" "}
+                {' '}
                 <div className="flex items-center">
                   <button
                     onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
@@ -172,8 +184,25 @@ function App() {
                     Blogs
                   </Link>
 
+
+                  <Link
+                    to="/folder/:token"
+                    className="text-gray-300 hover:text-white"
+                  >
+                       gallery
+                  </Link>
+
+               
+
                   <Link to="/login" className="text-gray-300 hover:text-white">
                     Login
+                  </Link>
+                  
+                  <Link
+                    to="/mainnotice"
+                    className="text-gray-300 hover:text-white"
+                  >
+                  Notices
                   </Link>
 
                   {userInfo ? (
@@ -183,7 +212,7 @@ function App() {
                           onClick={() => setShowDropdown(!showDropdown)}
                           className="text-white font-medium hover:text-gray-300 focus:outline-none"
                         >
-                          {userInfo.name}{" "}
+                          {userInfo.name}{' '}
                           <i className="fas fa-caret-down ml-1"></i>
                         </button>
                         {showDropdown && (
@@ -222,7 +251,7 @@ function App() {
                       className="text-gray-300 hover:text-white"
                       to="/signin"
                     >
-                      Login
+                      User
                     </Link>
                   )}
                 </div>
@@ -234,8 +263,8 @@ function App() {
             //sidebar
             className={
               sidebarIsOpen
-                ? "active-nav side-navbar d-flex justify-content-between flex-wrap flex-column"
-                : "side-navbar d-flex justify-content-between flex-wrap flex-column"
+                ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
+                : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
             }
           >
             <Nav className="flex-column text-white w-100 p-2">
@@ -343,6 +372,18 @@ function App() {
                 <Route path="/edit-blog/:id" element={<EditBlog />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Log />} />
+
+
+                <Route path="/mainnotice" element={<NoticeHome/>}/>
+                <Route path="/addnotice" element={<AddNotice/>}/>
+                <Route path="/noticedetails" element={<Notices/>}/>
+                <Route path="/noticedetails/:id" element={<UpdateNotice/>}/>
+
+
+
+
+                <Route path="/admingallery" element={<AdminPage />} />
+                <Route path="/folder/:token" element={<UserPage />} />
                 <Route
                   path="/admin/*"
                   element={
@@ -394,7 +435,7 @@ function App() {
                 <Route
                   path="/create-package"
                   element={<CreatePackageScreen />}
-                />{" "}
+                />{' '}
                 {/* Add  route */}
                 <Route path="/" element={<HeroPage />} />
               </Routes>

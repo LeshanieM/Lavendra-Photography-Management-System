@@ -27,15 +27,24 @@ const AdminHeader = () => {
               Inquiry
             </button>
 
+            <button onClick={() => navigate('/admingallery')}>Gallery</button>
+
+  
+            <button onClick={() => navigate('/addnotice')}>
+            Add notice
+            </button>
+       
+
             <button onClick={() => navigate('/adminpaymentview')}>
               Payments
             </button>
 
-            
             <button onClick={() => navigate('/create-package')}>
-            Add-package
+              Add-package
             </button>
+
             
+
             <button onClick={() => navigate('/deliveries')}>Delivery</button>
 
             <button onClick={() => navigate('/manage-blogs')}>Blogs</button>
