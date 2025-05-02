@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  Paper,
+  Alert,
+  Stepper,
+  Step,
+  StepLabel,
+  Card,
+  CardContent,
+} from "@mui/material";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 // Establish socket.io connection to backend
 const socket = io("http://localhost:5000");
@@ -9,11 +27,18 @@ const CustomerTracking = () => {
   const [orderId, setOrderId] = useState("");
   const [deliveryStatus, setDeliveryStatus] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Progress tracker
   const statusSteps = ["Pending", "Out for Delivery", "Delivered", "Completed"];
-  const colors = { Pending: "green", "Out for Delivery": "green", Delivered: "green", Completed: "green" };
+  const colors = {
+    Pending: "green",
+    "Out for Delivery": "orange",
+    Delivered: "purple",
+    Completed: "gray",
+  };
 
+  // Real-time updates
   useEffect(() => {
     socket.on("statusUpdated", (updatedDelivery) => {
       if (updatedDelivery.orderId === orderId) {
@@ -24,11 +49,12 @@ const CustomerTracking = () => {
     return () => socket.off("statusUpdated");
   }, [orderId]);
 
-  // Fetch delivery status by order ID 
+  // Track order
   const trackOrder = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/deliveries`);
-      const delivery = response.data.find(d => d.orderId === orderId);
+      const response = await axios.get("http://localhost:5000/api/deliveries");
+      const delivery = response.data.find((d) => d.orderId === orderId);
 
       if (!delivery) {
         setError("Order not found.");
@@ -40,74 +66,119 @@ const CustomerTracking = () => {
     } catch (error) {
       console.error("Error tracking order:", error);
       setError("Failed to track order.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get messages according to the delivery status
+  const getStatusMessage = (status) => {
+    switch (status) {
+      case "Pending":
+        return {
+          message: "Your order has been placed and is being processed.",
+          icon: <PendingActionsIcon sx={{ fontSize: 80, color: "#6a1b9a" }} />,
+        };
+      case "Out for Delivery":
+        return {
+          message: "Good news! Your order is on its way.",
+          icon: <LocalShippingIcon sx={{ fontSize: 80, color: "#6a1b9a" }} />,
+        };
+      case "Delivered":
+        return {
+          message: "Your order has been delivered. Please check your delivery.",
+          icon: <InventoryIcon sx={{ fontSize: 80, color: "#6a1b9a" }} />,
+        };
+      case "Completed":
+        return {
+          message: "Thank you! Your order is successfully completed.",
+          icon: <CheckCircleIcon sx={{ fontSize: 80, color: "#6a1b9a" }} />,
+        };
+      default:
+        return { message: "", icon: null };
     }
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px' }}>
-      <h1 style={{ marginBottom: '1.5rem', color: '#333' }}>Track Your Order</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', gap: '10px' }}>
-        <input
-          type="text"
-          placeholder="Enter Order ID"
-          value={orderId}
-          onChange={(e) => setOrderId(e.target.value)}
-          style={{
-            padding: '10px',
-            fontSize: '1rem',
-            width: '300px',
-            border: '2px solid #ccc',
-            borderRadius: '5px',
-            transition: 'border-color 0.3s ease'
-          }}
-        />
-        <button
-          type="button"
-          onClick={trackOrder}
-          style={{
-            padding: '10px 20px',
-            fontSize: '1rem',
-            backgroundColor: '#3057cc',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease'
-          }}
-        >
-          Track
-        </button>
-      </div>
+    <Box sx={{ textAlign: "center", margin: "20px" }}>
+      <Typography variant="h4" gutterBottom>
+        Track Your Order
+      </Typography>
 
-      {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</p>}
+      {/* Track Order Card */}
+      <Paper sx={{ padding: 3, display: "inline-block" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <TextField
+            label="Enter Order ID"
+            variant="outlined"
+            value={orderId}
+            onChange={(e) => setOrderId(e.target.value)}
+            sx={{ width: "300px" }}
+          />
+          <Button
+            variant="contained"
+            onClick={trackOrder}
+            sx={{
+              height: "56px",
+              backgroundColor: "#6a1b9a",
+              "&:hover": {
+                backgroundColor: "#38006b",
+              },
+            }}
+          >
+            Track
+          </Button>
+        </Box>
 
-      {deliveryStatus && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', maxWidth: '500px', margin: '20px auto', position: 'relative' }}>
-          {statusSteps.map((step, index) => (
-            <div key={step} style={{ textAlign: 'center', flex: 1, position: 'relative' }}>
-              <div
-                className={`dot ${statusSteps.indexOf(deliveryStatus) >= index ? "active" : ""}`}
-                style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '50%',
-                  backgroundColor: statusSteps.indexOf(deliveryStatus) >= index ? colors[step] : 'gray',
-                  margin: '0 auto',
-                  transition: 'background-color 0.5s ease-in-out',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  color: 'white'
-                }}
-              ></div>
-              <p style={{ marginTop: '5px', fontSize: '12px' }}>{step}</p>
-            </div>
-          ))}
-        </div>
+        {error && (
+          <Alert severity="error" sx={{ marginTop: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {loading && (
+          <Box sx={{ marginTop: 3 }}>
+            <CircularProgress sx={{ color: "#6a1b9a" }} />
+          </Box>
+        )}
+
+        {deliveryStatus && !loading && (
+          <Box sx={{ marginTop: 3 }}>
+            {/* Progress Stepper */}
+            <Stepper activeStep={statusSteps.indexOf(deliveryStatus)} alternativeLabel>
+              {statusSteps.map((step, index) => (
+                <Step key={step} sx={{ maxWidth: "120px" }}>
+                  <StepLabel
+                    sx={{
+                      color:
+                        statusSteps.indexOf(deliveryStatus) >= index
+                          ? colors[step]
+                          : "gray",
+                    }}
+                  >
+                    {step}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
+        )}
+      </Paper>
+
+      {/* Status Message Card */}
+      {deliveryStatus && !loading && (
+        <Card sx={{ marginTop: 4, padding: 3, backgroundColor: "#f3e5f5", width: "400px", marginX: "auto" }}>
+          <CardContent>
+            <Typography variant="h6" sx={{ color: "#6a1b9a", marginBottom: 2 }}>
+              {getStatusMessage(deliveryStatus).message}
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+              {getStatusMessage(deliveryStatus).icon}
+            </Box>
+          </CardContent>
+        </Card>
       )}
-    </div>
+    </Box>
   );
 };
 

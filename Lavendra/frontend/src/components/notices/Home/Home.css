@@ -1,0 +1,76 @@
+/* Home.css */
+
+.home-container {
+    padding: 30px 20px;
+    background-color: #f2f7ff;
+    min-height: 100vh;
+  }
+  
+  .home-heading {
+    text-align: center;
+    color: #003366;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .notice-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+  
+  .notice-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+  
+  .notice-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .notice-title {
+    font-size: 1.4rem;
+    color: #af35d1;
+    margin-bottom: 10px;
+  }
+  
+  .notice-date {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  
+  .notice-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* WhatsApp Button */
+.whatsapp-button {
+  background-color: #25D366; /* WhatsApp green */
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto; /* center button */
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-button:hover {
+  background-color: #1ebe5d;
+}

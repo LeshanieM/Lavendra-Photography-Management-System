@@ -12,7 +12,6 @@ import Pie from './scenes/pie';
 import FAQ from './scenes/faq/faq';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
-import AdminLogin from './AdminLogin';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 
 function Admin() {
@@ -37,7 +36,6 @@ function Admin() {
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/adminLogin" element={<AdminLogin />} />
             </Routes>
           </main>
         </div>

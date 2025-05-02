@@ -18,6 +18,8 @@ import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import SearchBar from './SearchBar';
 import InquiryList from './InquiryList';
+import AdminHeader from '../pages/AdminHeader';
+
 
 const InquiryDashboard = () => {
     // State management
@@ -231,6 +233,8 @@ const InquiryDashboard = () => {
     const formatDateForInput = (date) => date?.toISOString().split('T')[0] || '';
 
     return (
+               <div  className="min-h-screen bg-gray-100">
+                  <AdminHeader />
         <Paper sx={{ p: 3, mb: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h4">Inquiries Dashboard</Typography>
@@ -331,6 +335,7 @@ const InquiryDashboard = () => {
                 </>
             )}
         </Paper>
+        </div>
     );
 };
 

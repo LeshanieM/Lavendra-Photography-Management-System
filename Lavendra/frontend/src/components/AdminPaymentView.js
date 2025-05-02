@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AdminHeader from '../pages/AdminHeader';
 import {
   Typography,
   CircularProgress,
@@ -69,9 +70,9 @@ const AdminPaymentView = () => {
   useEffect(() => {
     let result = [...payments];
     
-    // Status filter
-    //if (tabValue === 1) result = result.filter(pmt => pmt.paymentStatus === 'pending');
-    //if (tabValue === 2) result = result.filter(pmt => pmt.paymentStatus === 'completed');
+    // Status filter (enabled for pending/completed payments)
+    if (tabValue === 1) result = result.filter(pmt => pmt.paymentStatus === 'pending');
+    if (tabValue === 2) result = result.filter(pmt => pmt.paymentStatus === 'completed');
     
     // Search filter
     if (search) {
@@ -194,13 +195,17 @@ const AdminPaymentView = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <CircularProgress />
-      </Box>
+      
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <CircularProgress />
+        </Box>
+   
     );
   }
 
   return (
+    <div  className="min-h-screen bg-gray-100">
+        <AdminHeader />
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box p={4}>
         <Typography variant="h4" gutterBottom>Admin Payment Dashboard</Typography>
@@ -208,14 +213,16 @@ const AdminPaymentView = () => {
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Tabs value={tabValue} onChange={handleTabChange}>
             <Tab label="All" />
+            <Tab label="Pending" />
+            <Tab label="Completed" />
           </Tabs>
           <Button 
-    variant="contained" 
-    color="secondary" 
-    onClick={() => window.open('https://dashboard.stripe.com/test/dashboard', '_blank')}
-  >
-    Go to Stripe Dashboard
-  </Button>
+            variant="contained" 
+            color="secondary" 
+            onClick={() => window.open('https://dashboard.stripe.com/test/dashboard', '_blank')}
+          >
+            Go to Stripe Dashboard
+          </Button>
           
           {filteredPayments.length > 0 && (
             <>
@@ -257,55 +264,40 @@ const AdminPaymentView = () => {
             label="Start Date"
             value={startDate}
             onChange={setStartDate}
-            slotProps={{ textField: { size: 'small' } }}
+            renderInput={(params) => <TextField {...params} size="small" />}
           />
           <DatePicker
             label="End Date"
             value={endDate}
             onChange={setEndDate}
-            slotProps={{ textField: { size: 'small' } }}
+            renderInput={(params) => <TextField {...params} size="small" />}
           />
           <Button variant="outlined" onClick={resetFilters}>
             Reset Filters
           </Button>
         </Box>
 
-        <Typography variant="subtitle2" sx={{ mb: 2, color: 'text.secondary' }}>
-          Showing {filteredPayments.length} payment{filteredPayments.length !== 1 ? 's' : ''}
-          {startDate && endDate && (
-            ` between ${startDate.format('MM/DD/YYYY')} and ${endDate.format('MM/DD/YYYY')}`
-          )}
-        </Typography>
-
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell><strong>Name</strong></TableCell>
-                <TableCell><strong>Email</strong></TableCell>
-                <TableCell><strong>Amount (LKR)</strong></TableCell>
-                <TableCell><strong>Status</strong></TableCell>
-                <TableCell><strong>Date</strong></TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Amount (LKR)</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredPayments.length > 0 ? (
-                filteredPayments.map(payment => (
-                  <TableRow key={payment._id}>
-                    <TableCell>{payment.name}</TableCell>
-                    <TableCell>{payment.email}</TableCell>
-                    <TableCell>{payment.amount}</TableCell>
-                    <TableCell>{payment.paymentStatus}</TableCell>
-                    <TableCell>{dayjs(payment.createdAt).format('MM/DD/YYYY hh:mm A')}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={5} align="center">
-                    No payments found matching your criteria
-                  </TableCell>
+              {filteredPayments.map((payment) => (
+                <TableRow key={payment._id}>
+                  <TableCell>{payment.name}</TableCell>
+                  <TableCell>{payment.email}</TableCell>
+                  <TableCell>{payment.amount}</TableCell>
+                  <TableCell>{payment.paymentStatus}</TableCell>
+                  <TableCell>{dayjs(payment.createdAt).format('MM/DD/YYYY hh:mm A')}</TableCell>
                 </TableRow>
-              )}
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
@@ -315,16 +307,13 @@ const AdminPaymentView = () => {
           autoHideDuration={6000}
           onClose={handleCloseSnackbar}
         >
-          <Alert 
-            onClose={handleCloseSnackbar} 
-            severity={snackbar.severity}
-            sx={{ width: '100%' }}
-          >
+          <Alert onClose={handleCloseSnackbar} severity={snackbar.severity}>
             {snackbar.message}
           </Alert>
         </Snackbar>
       </Box>
     </LocalizationProvider>
+    </div>
   );
 };
 

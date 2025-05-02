@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ReactStars from 'react-rating-stars-component';
+import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Rating,
+  InputLabel,
+  FormControl,
+  Box,
+} from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 const ReviewDisplay = () => {
   const [reviews, setReviews] = useState([]);
   const [filteredReviews, setFilteredReviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [ratingFilter, setRatingFilter] = useState('');
+  const navigate = useNavigate();
 
-  // Fetch reviews
+  // Fetching reviews
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -33,173 +50,196 @@ const ReviewDisplay = () => {
     filterReviews(searchQuery, e.target.value);
   };
 
-  // Filter reviews based on search and rating filter
+  // Filtering reviews
   const filterReviews = (query, rating) => {
-    let filtered = reviews.filter((review) => {
+    const filtered = reviews.filter((review) => {
       const matchesSearch =
         review.name.toLowerCase().includes(query.toLowerCase()) ||
         review.reviewText.toLowerCase().includes(query.toLowerCase());
-
       const matchesRating = rating ? review.rating === parseInt(rating) : true;
-
       return matchesSearch && matchesRating;
     });
     setFilteredReviews(filtered);
   };
 
-  // Clear all filters
+  // Clear filters
   const clearFilters = () => {
     setSearchQuery('');
     setRatingFilter('');
     setFilteredReviews(reviews);
   };
 
+  // Navigation when click on buttons
+  const handleAddReviewClick = () => {
+    navigate('/addReview');
+  };
+
+  const handleGoToReview = () => {
+    navigate('/update-review');
+  };
+
   return (
-    <div className="review-display-container" style={{ padding: '2rem' }}>
-      <h1
-        style={{
-          color: '#000000',
-          textAlign: 'center',
-          marginBottom: '1.5rem',
-          fontSize: '2rem',
-          fontWeight: '600',
-          textTransform: 'uppercase',
-          letterSpacing: '1px',
-        }}
+    <Container sx={{ py: 2 }}>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{ fontWeight: 600, letterSpacing: 1 }}
       >
         Reviews
-      </h1>
+      </Typography>
 
-      {/* Search Bar */}
-      <div
-        className="search-bar"
-        style={{
-          marginBottom: '20px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+      {/* Filters Section*/}
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 4 }}
       >
-        <input
-          type="text"
-          placeholder="Search by name or review"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          style={{
-            padding: '10px',
-            fontSize: '1rem',
-            width: '300px',
-            border: '2px solid #ccc',
-            borderRadius: '5px',
-            transition: 'border-color 0.3s ease',
-          }}
-        />
-      </div>
-
-      {/* Filters */}
-      <div
-        className="filters"
-        style={{
-          display: 'flex',
-          gap: '15px',
-          alignItems: 'center',
-          marginBottom: '20px',
-        }}
-      >
-        <h3 style={{ fontSize: '1.2rem', color: '#3057cc' }}>Filters</h3>
-        <select
-          onChange={handleRatingFilter}
-          value={ratingFilter}
-          style={{
-            padding: '10px',
-            fontSize: '1rem',
-            border: '2px solid #ccc',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            transition: 'border-color 0.3s ease',
-          }}
-        >
-          <option value="">All Ratings</option>
-          <option value="1">1 Star</option>
-          <option value="2">2 Stars</option>
-          <option value="3">3 Stars</option>
-          <option value="4">4 Stars</option>
-          <option value="5">5 Stars</option>
-        </select>
-
-        <button
-          onClick={clearFilters}
-          style={{
-            padding: '10px 20px',
-            fontSize: '1rem',
-            backgroundColor: '#3057cc',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease',
-            width: '150px',
-          }}
-        >
-          Clear Filters
-        </button>
-      </div>
-
-      {/* Display Reviews */}
-      {filteredReviews.length === 0 ? (
-        <p style={{ textAlign: 'center', color: '#999' }}>No reviews found.</p>
-      ) : (
-        <div
-          className="review-list"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '20px',
-            padding: '20px',
-          }}
-        >
-          {filteredReviews.map((review) => (
-            <div
-              key={review._id}
-              className="review-card"
-              style={{
-                border: '1px solid #ccc',
-                borderRadius: '12px',
-                padding: '1.5rem',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                backgroundColor: '#ffffff',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              }}
-            >
-              <h3 style={{ color: '#3057cc', marginBottom: '0.8rem' }}>
-                {review.name}
-              </h3>
-              <p
-                style={{
-                  fontSize: '1rem',
-                  color: '#555',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem',
-                }}
+        <Grid item xs={12} md={4}>
+          <Box display="flex" alignItems="center" gap={2}>
+            <FilterListIcon sx={{ color: '#6a1b9a' }} />
+            <Typography variant="h6" color="#6a1b9a">
+              Filters
+            </Typography>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <InputLabel>Rating</InputLabel>
+              <Select
+                value={ratingFilter}
+                onChange={handleRatingFilter}
+                label="Rating"
               >
-                {review.reviewText}
-              </p>
+                <MenuItem value="">All Ratings</MenuItem>
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <MenuItem key={rating} value={rating}>
+                    {rating} Star{rating > 1 ? 's' : ''}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </Grid>
 
-              {/* Display Rating with Stars */}
-              <div className="rating-stars">
-                <ReactStars
-                  count={5}
-                  value={review.rating}
-                  size={24}
-                  activeColor="#ffd700"
-                  edit={false}
-                />
-              </div>
-            </div>
+        <Grid item xs={12} md={4}>
+          <Box display="flex" justifyContent="center">
+            <TextField
+              size="small"
+              variant="outlined"
+              label="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              sx={{ minWidth: 300 }}
+            />
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Box display="flex" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: '#6a1b9a',
+                '&:hover': { backgroundColor: '#38006b' },
+              }}
+              onClick={clearFilters}
+            >
+              Clear Filters
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* Review cards*/}
+      {filteredReviews.length === 0 ? (
+        <Typography align="center" color="text.secondary">
+          No reviews found.
+        </Typography>
+      ) : (
+        <Grid container spacing={3}>
+          {filteredReviews.map((review) => (
+            <Grid item key={review._id} xs={12} sm={6} md={4}>
+              <Card elevation={3} sx={{ borderRadius: 2 }}>
+                <CardContent>
+                  <Typography variant="h6" color="#6a1b9a" gutterBottom>
+                    {review.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {review.reviewText}
+                  </Typography>
+                  <Rating value={review.rating} readOnly />
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       )}
-    </div>
+
+      <Box
+        sx={{
+          mt: 5,
+          bgcolor: '#f3e5f5',
+          py: 3,
+          px: 2,
+          borderRadius: 2,
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 3,
+          textAlign: { xs: 'center', md: 'left' },
+        }}
+      >
+        <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <img
+            src="/images/review_display_img.png"
+            alt="Review Banner"
+            style={{
+              width: '100%',
+              maxWidth: '900px',
+              borderRadius: '8px',
+            }}
+          />
+        </Box>
+
+        {/* Review bottom description section*/}
+        <Box
+          sx={{
+            flex: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+          }}
+        >
+          <Typography variant="h6" color="#6a1b9a" gutterBottom>
+            Did you enjoy your experience with Lavendra Photography? We'd truly
+            appreciate it if you could take a moment to share your thoughts and
+            help others discover our services!
+          </Typography>
+          <br />
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#6a1b9a',
+              '&:hover': { backgroundColor: '#38006b' },
+            }}
+            onClick={handleAddReviewClick}
+          >
+            Write a Review
+          </Button>
+          <br />
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={handleGoToReview}
+          >
+            Go to My Reviews
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

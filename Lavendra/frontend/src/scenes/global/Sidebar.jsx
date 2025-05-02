@@ -147,6 +147,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+           
             <Item
               title="Payments"
               to="/adminpaymentview"
