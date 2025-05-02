@@ -342,7 +342,8 @@ app.post('/folders', async (req, res) => {
       });
     }
 
-    
+    // In Cloudinary, folders are created implicitly by uploading a file to a path
+    // We'll upload a tiny placeholder and then delete it
     const placeholderData =
       'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
@@ -386,7 +387,7 @@ app.get('/folders', async (req, res) => {
   }
 });
 
-// Email configuration
+// Email configuration (add to your .env)
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE || 'gmail',
   auth: {
