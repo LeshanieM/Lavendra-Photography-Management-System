@@ -1,0 +1,50 @@
+/* notices.css */
+
+body {
+    background-color: #f8f9fa; /* light background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  h1 {
+    text-align: left;
+    margin-top: 30px;
+    color: #343a40;
+    font-weight: 600;
+  }
+  
+  .notice-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px auto;
+    gap: 20px;
+    max-width: 1200px;
+  }
+  
+  .notice-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .notice-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .notice-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  .notice-body {
+    font-size: 1rem;
+    color: #495057;
+  }
+  

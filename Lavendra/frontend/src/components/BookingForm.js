@@ -18,7 +18,10 @@ function BookingForm() {
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
   const [bookings, setBookings] = useState([]);
-  const [currentBookingId, setCurrentBookingId] = useState(null); // Track the booking being updated
+  const [currentBookingId, setCurrentBookingId] = useState(null);
+  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const [showWhatsappModal, setShowWhatsappModal] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   const calculateTotalPrice = () => {
     return (
@@ -116,14 +119,38 @@ function BookingForm() {
       }
     }
   };
-  //user can chat with the photographer
-  const handleSendReport = () => {
-    const phoneNumber = '+94712298436';
-    const message = `I want to know more details about the package `;
-    const WhastsAppUrl = `https://web.whatsapp.com/send?phone=+${phoneNumber}&text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(WhastsAppUrl, '_blank');
+
+  const handleSendWhatsApp = (booking) => {
+    setSelectedBooking(booking);
+    setShowWhatsappModal(true);
+  };
+
+  const confirmSendWhatsApp = () => {
+    if (!whatsappNumber) {
+      alert('Please enter a valid phone number');
+      return;
+    }
+
+    const formattedDate = new Date(selectedBooking.date).toLocaleDateString();
+    const message = `Photography Booking Details:
+    
+📅 Date: ${formattedDate}
+⏰ Time: ${selectedBooking.time}
+📍 Location: ${selectedBooking.location}
+📸 Photographers: ${selectedBooking.photographers}
+⏳ Duration: ${selectedBooking.hours} hours
+🏞️ Locations: ${selectedBooking.locations}
+🖼️ Edited Photos: ${selectedBooking.editedPhotos}
+💰 Total Price: LKR ${selectedBooking.totalPrice}
+
+Booked by: ${selectedBooking.email}
+
+Thank you for your booking!`;
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    setShowWhatsappModal(false);
+    setWhatsappNumber('');
   };
 
   const handleUpdate = (booking) => {
@@ -136,7 +163,7 @@ function BookingForm() {
     setTime(booking.time);
     setLocation(booking.location);
     setEmail(booking.email);
-    setCurrentBookingId(booking._id); // Set current booking ID for update
+    setCurrentBookingId(booking._id);
   };
 
   const clearForm = () => {
@@ -149,7 +176,7 @@ function BookingForm() {
     setTime('');
     setLocation('');
     setEmail('');
-    setCurrentBookingId(null); // Reset the booking ID after submission
+    setCurrentBookingId(null);
   };
 
   useEffect(() => {
@@ -290,39 +317,109 @@ function BookingForm() {
         </button>
 
         <h3 className="mt-4">Booking History</h3>
-        <ul className="list-group">
-          {bookings.map((booking, index) => (
-            <li key={index} className="list-group-item">
-              {booking.photographers} Photographers - {booking.totalPrice}LKR at{' '}
-              {booking.location} on {booking.date} at {booking.time},{' '}
-              {booking.hours} Hours, {booking.locations} Locations,{' '}
-              {booking.editedPhotos} Edited Photos, Email: {booking.email}
-              <button
-                className="btn btn-warning btn-sm ml-2"
-                onClick={() => handleUpdate(booking)}
-              >
-                Update
-              </button>
-              <button
-                className="btn btn-danger btn-sm ml-2"
-                onClick={() => handleDelete(booking._id)}
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Photographers</th>
+                <th>Price</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((booking, index) => (
+                <tr key={index}>
+                  <td>{new Date(booking.date).toLocaleDateString()}</td>
+                  <td>{booking.time}</td>
+                  <td>{booking.location}</td>
+                  <td>{booking.photographers}</td>
+                  <td>LKR {booking.totalPrice}</td>
+                  <td>{booking.email}</td>
+                  <td>
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                      onClick={() => handleUpdate(booking)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm me-2"
+                      onClick={() => handleDelete(booking._id)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => handleSendWhatsApp(booking)}
+                    >
+                      WhatsApp
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className="my-3">
-        <button
-          onClick={handleSendReport}
-          className="btn"
-          style={{ backgroundColor: '#25D366', color: 'white' }}
-        >
-          Send Message via WhatsApp
-        </button>
-      </div>
+      {/* WhatsApp Modal */}
+      {showWhatsappModal && (
+        <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Send Booking Details via WhatsApp</h5>
+                <button 
+                  type="button" 
+                  className="btn-close" 
+                  onClick={() => setShowWhatsappModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>Enter the phone number to send booking details (include country code, e.g., +94...)</p>
+                <input
+                  type="tel"
+                  className="form-control"
+                  value={whatsappNumber}
+                  onChange={(e) => setWhatsappNumber(e.target.value)}
+                  placeholder="e.g., +94712298436"
+                />
+                <div className="mt-3">
+                  <p><strong>Booking Details to be Sent:</strong></p>
+                  <ul>
+                    <li>Date: {new Date(selectedBooking?.date).toLocaleDateString()}</li>
+                    <li>Time: {selectedBooking?.time}</li>
+                    <li>Location: {selectedBooking?.location}</li>
+                    <li>Photographers: {selectedBooking?.photographers}</li>
+                    <li>Price: LKR {selectedBooking?.totalPrice}</li>
+                    <li>Email: {selectedBooking?.email}</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button 
+                  type="button" 
+                  className="btn btn-secondary" 
+                  onClick={() => setShowWhatsappModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="button" 
+                  className="btn btn-primary" 
+                  onClick={confirmSendWhatsApp}
+                >
+                  Send via WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
