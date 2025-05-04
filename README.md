@@ -1,4 +1,4 @@
-📸 Lavendra Photography Management System
+📸 Lavendra Photography Management System - Y2S2 ITP Group Project
 
 Lavendra is a full-featured Photography Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It serves as a centralized platform for photography service operations, offering:
 
