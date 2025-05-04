@@ -1,6 +1,6 @@
 📸 Lavendra Photography Management System - Y2S2 ITP Group Project
 
-Lavendra is a full-featured Photography Management System built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It serves as a centralized platform for photography service operations, offering:
+Lavendra is a custom-built Photography Management System developed for a client using the MERN stack (MongoDB, Express.js, React.js, Node.js). The system streamlines operations for a photography service business, offering a wide range of features tailored to client needs:
 
     🎥 Photography Item Rental Marketplace – browse and rent photography gear online
 
