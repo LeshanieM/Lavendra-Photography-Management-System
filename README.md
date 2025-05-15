@@ -18,4 +18,4 @@ Lavendra is a custom-built Photography Management System developed for a client 
 
     👥 User & Admin Role Management – secure role-based access control
 
-Lavendra is designed to support both customers and admins efficiently using Role Based Access Control Concept, making it ideal for photography businesses and rental services.
+Lavendra is designed to support both customers and admins efficiently based on Role Based Access Control Concept, making it ideal for photography businesses and rental services.
