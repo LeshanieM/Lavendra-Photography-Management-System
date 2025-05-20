@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
-import CreatePackageScreen from './screens/CreatePackageScreen'; // Import the CreatePackageScreen
+import CreatePackageScreen from './screens/CreatePackageScreen';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -46,43 +46,39 @@ import DeliveryForm from './components/delivery/DeliveryForm';
 import CustomerTracking from './components/delivery/CustomerTracking';
 import OrderSuccess from './components/delivery/OrderSuccess';
 
-import Team from "./scenes/team";
-import Contacts from "./scenes/contacts";
-import Bar from "./scenes/bar";
-import Form from "./scenes/form";
-import Line from "./scenes/line";
-import Pie from "./scenes/pie";
-import FAQ from "./scenes/faq/faq";
-import UserInquiriesPage from "./components/userInquiriesPage";
-import AdminPaymentView from "./components/AdminPaymentView";
+import Team from './scenes/team';
+import Contacts from './scenes/contacts';
+import Bar from './scenes/bar';
+import Form from './scenes/form';
+import Line from './scenes/line';
+import Pie from './scenes/pie';
+import FAQ from './scenes/faq/faq';
+import UserInquiriesPage from './components/userInquiriesPage';
+import AdminPaymentView from './components/AdminPaymentView';
 
-import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
-import Log from "./pages/SigninScreen";
-import Register from "./pages/SignupScreen";
-import AdminDashboard from "./pages/AdminDashboard";
-import PhotographerHome from "./pages/PhotographerHome";
-import UserHome from "./pages/UserHome";
-import Profile from "./pages/Profile";
-import AddBlog from "./components/AddBlog";
-import ViewBlogs from "./components/ViewBlogs";
-import ManageBlogs from "./components/ManageBlogs";
-import EditBlog from "./components/EditBlog";
-
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Log from './pages/SigninScreen';
+import Register from './pages/SignupScreen';
+import AdminDashboard from './pages/AdminDashboard';
+import PhotographerHome from './pages/PhotographerHome';
+import UserHome from './pages/UserHome';
+import Profile from './pages/Profile';
+import AddBlog from './components/AddBlog';
+import ViewBlogs from './components/ViewBlogs';
+import ManageBlogs from './components/ManageBlogs';
+import EditBlog from './components/EditBlog';
 
 import AdminPage from './pages/AdminGalleryPage';
 import UserPage from './pages/UserGalleryPage';
 
-
-
-import NoticeHome from "./components/notices/Home/Home";
-import AddNotice from "./components/notices/AddNotice/AddNotice";
-import Notices from "./components/notices/NoticeDetails/Notices";
-import UpdateNotice from "./components/notices/UpdateNotice/UpdateNotice";
-
+import NoticeHome from './components/notices/Home/Home';
+import AddNotice from './components/notices/AddNotice/AddNotice';
+import Notices from './components/notices/NoticeDetails/Notices';
+import UpdateNotice from './components/notices/UpdateNotice/UpdateNotice';
 
 const stripePromise = loadStripe(
-  "pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB"
+  'pk_test_51Qt4VIGaVSNorcZ7k77Ea074NYwqQAEED5jVr77L6HL3q0ZhUIQK6kl6eNrKKmDDl2EBB27Box0zSm3seGGuxUnq00zJs87snB'
 );
 
 function App() {
@@ -91,11 +87,11 @@ function App() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const signoutHandler = () => {
-    ctxDispatch({ type: "USER_SIGNOUT" });
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("shippingAddress");
+    ctxDispatch({ type: 'USER_SIGNOUT' });
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
   };
-  localStorage.removeItem("paymentMethod");
 
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -121,13 +117,14 @@ function App() {
               ? 'd-flex flex-column site-container active-cont'
               : 'd-flex flex-column site-container'
           }
+          style={{ minHeight: '100vh' }}
         >
           <ToastContainer position="bottom-center" limit={1} />
-          {/* Fixed header */}
-          <header className="bg-gray-800 shadow-sm mb-6">
+          
+          {/* Header */}
+          <header className="text-white shadow-md py-3 px-6" style={{ backgroundColor: '#301034' }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between h-20">
-                {' '}
+              <div className="flex justify-between items-center h-16">
                 <div className="flex items-center">
                   <button
                     onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
@@ -140,7 +137,7 @@ function App() {
                       <img
                         src="/images/logo.png"
                         alt="Lavendra Logo"
-                        className="h-20 w-auto"
+                        className="h-16 w-auto"
                       />
                       <h1 className="ml-3 text-xl font-bold text-white">
                         Lavendra
@@ -148,13 +145,10 @@ function App() {
                     </div>
                   </LinkContainer>
                 </div>
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-4">
                   <SearchBox darkMode={true} />
 
-                  <Link
-                    to="/cart"
-                    className="text-gray-300 hover:text-white relative"
-                  >
+                  <Link to="/cart" className="text-gray-300 hover:text-white relative">
                     Cart
                     {cart.cartItems.length > 0 && (
                       <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -163,46 +157,28 @@ function App() {
                     )}
                   </Link>
 
-                  <Link
-                    to="/inquiryForm"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Inquiry Form
+                  <Link to="/inquiryForm" className="text-gray-300 hover:text-white">
+                    Inquiry
                   </Link>
 
-                  <Link
-                    to="/reviews"
-                    className="text-gray-300 hover:text-white"
-                  >
+                  <Link to="/reviews" className="text-gray-300 hover:text-white">
                     Reviews
                   </Link>
 
-                  <Link
-                    to="/view-blogs"
-                    className="text-gray-300 hover:text-white"
-                  >
+                  <Link to="/view-blogs" className="text-gray-300 hover:text-white">
                     Blogs
                   </Link>
 
-
-                  <Link
-                    to="/folder/:token"
-                    className="text-gray-300 hover:text-white"
-                  >
-                       gallery
+                  <Link to="/folder/:token" className="text-gray-300 hover:text-white">
+                    Gallery
                   </Link>
-
-               
 
                   <Link to="/login" className="text-gray-300 hover:text-white">
                     Login
                   </Link>
-                  
-                  <Link
-                    to="/mainnotice"
-                    className="text-gray-300 hover:text-white"
-                  >
-                  Notices
+
+                  <Link to="/mainnotice" className="text-gray-300 hover:text-white">
+                    Notices
                   </Link>
 
                   {userInfo ? (
@@ -212,21 +188,14 @@ function App() {
                           onClick={() => setShowDropdown(!showDropdown)}
                           className="text-white font-medium hover:text-gray-300 focus:outline-none"
                         >
-                          {userInfo.name}{' '}
-                          <i className="fas fa-caret-down ml-1"></i>
+                          {userInfo.name} <i className="fas fa-caret-down ml-1"></i>
                         </button>
                         {showDropdown && (
                           <div className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                            <div
-                              className="py-1"
-                              role="menu"
-                              aria-orientation="vertical"
-                              aria-labelledby="options-menu"
-                            >
+                            <div className="py-1" role="menu">
                               <Link
                                 to="/orderhistory"
                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                role="menuitem"
                                 onClick={() => setShowDropdown(false)}
                               >
                                 Order History
@@ -237,7 +206,6 @@ function App() {
                                   setShowDropdown(false);
                                 }}
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                role="menuitem"
                               >
                                 Sign Out
                               </button>
@@ -247,10 +215,7 @@ function App() {
                       </div>
                     </div>
                   ) : (
-                    <Link
-                      className="text-gray-300 hover:text-white"
-                      to="/signin"
-                    >
+                    <Link className="text-gray-300 hover:text-white" to="/signin">
                       User
                     </Link>
                   )}
@@ -259,8 +224,8 @@ function App() {
             </div>
           </header>
 
+          {/* Sidebar */}
           <div
-            //sidebar
             className={
               sidebarIsOpen
                 ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
@@ -271,53 +236,36 @@ function App() {
               <Nav.Item>
                 <strong>Categories</strong>
               </Nav.Item>
-
               <Nav.Item>
-                <LinkContainer
-                  to="/calendar"
-                  onClick={() => setSidebarIsOpen(false)}
-                >
+                <LinkContainer to="/calendar" onClick={() => setSidebarIsOpen(false)}>
                   <Nav.Link>Calendar</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
-
               <Nav.Item>
-                <LinkContainer
-                  to="/track-order"
-                  onClick={() => setSidebarIsOpen(false)}
-                >
+                <LinkContainer to="/track-order" onClick={() => setSidebarIsOpen(false)}>
                   <Nav.Link>Track My Order</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
               <Nav.Item>
-                <LinkContainer
-                  to="/add-delivery"
-                  onClick={() => setSidebarIsOpen(false)}
-                >
+                <LinkContainer to="/add-delivery" onClick={() => setSidebarIsOpen(false)}>
                   <Nav.Link>Add Delivery</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
-
               <Nav.Item>
-                <LinkContainer
-                  to="/userinquirypage"
-                  onClick={() => setSidebarIsOpen(false)}
-                >
+                <LinkContainer to="/userinquirypage" onClick={() => setSidebarIsOpen(false)}>
                   <Nav.Link>Inquiry List</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
-
               <Nav.Item>
-                <LinkContainer
-                  to="/PaymentList"
-                  onClick={() => setSidebarIsOpen(false)}
-                >
+                <LinkContainer to="/PaymentList" onClick={() => setSidebarIsOpen(false)}>
                   <Nav.Link>Payment List</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
             </Nav>
           </div>
-          <main>
+
+          {/* Main Content */}
+          <main className="flex-grow-1">
             <Container className="mt-3">
               <Elements stripe={stripePromise}>
                 <Routes>
@@ -334,14 +282,11 @@ function App() {
                 <Route path="/signin" element={<SigninScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
                 <Route path="/placeorder" element={<PlaceOrderScreen />} />
-                <Route path="/order/:id" element={<OrderScreen />}></Route>
+                <Route path="/order/:id" element={<OrderScreen />} />
                 <Route path="/shipping" element={<AddressScreen />} />
-                <Route
-                  path="/payment"
-                  element={<PaymentMethodScreen />}
-                ></Route>
-                <Route path="/paymentList" element={<PaymentList />}></Route>
-                <Route path="/inquiryForm" element={<InquiryForm />}></Route>
+                <Route path="/payment" element={<PaymentMethodScreen />} />
+                <Route path="/paymentList" element={<PaymentList />} />
+                <Route path="/inquiryForm" element={<InquiryForm />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/admin1" element={<Admin />} />
                 <Route path="/home" element={<Home />} />
@@ -362,26 +307,17 @@ function App() {
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
                 <Route path="/faq" element={<FAQ />} />
-                <Route
-                  path="/adminpaymentview"
-                  element={<AdminPaymentView />}
-                />
+                <Route path="/adminpaymentview" element={<AdminPaymentView />} />
                 <Route path="/add-blog" element={<AddBlog />} />
                 <Route path="/view-blogs" element={<ViewBlogs />} />
                 <Route path="/manage-blogs" element={<ManageBlogs />} />
                 <Route path="/edit-blog/:id" element={<EditBlog />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Log />} />
-
-
-                <Route path="/mainnotice" element={<NoticeHome/>}/>
-                <Route path="/addnotice" element={<AddNotice/>}/>
-                <Route path="/noticedetails" element={<Notices/>}/>
-                <Route path="/noticedetails/:id" element={<UpdateNotice/>}/>
-
-
-
-
+                <Route path="/mainnotice" element={<NoticeHome />} />
+                <Route path="/addnotice" element={<AddNotice />} />
+                <Route path="/noticedetails" element={<Notices />} />
+                <Route path="/noticedetails/:id" element={<UpdateNotice />} />
                 <Route path="/admingallery" element={<AdminPage />} />
                 <Route path="/folder/:token" element={<UserPage />} />
                 <Route
@@ -416,33 +352,29 @@ function App() {
                     </PrivateRoute>
                   }
                 />
-                <Route
-                  path="/inquiryDashboard"
-                  element={<InquiryDashboard />}
-                ></Route>
-                <Route
-                  path="/userinquirypage"
-                  element={<UserInquiriesPage />}
-                ></Route>
-                <Route
-                  path="/adminpaymentview"
-                  element={<AdminPaymentView />}
-                ></Route>
-                <Route
-                  path="/orderhistory"
-                  element={<OrderHistoryScreen />}
-                ></Route>
-                <Route
-                  path="/create-package"
-                  element={<CreatePackageScreen />}
-                />{' '}
-                {/* Add  route */}
+                <Route path="/inquiryDashboard" element={<InquiryDashboard />} />
+                <Route path="/userinquirypage" element={<UserInquiriesPage />} />
+                <Route path="/adminpaymentview" element={<AdminPaymentView />} />
+                <Route path="/orderhistory" element={<OrderHistoryScreen />} />
+                <Route path="/create-package" element={<CreatePackageScreen />} />
                 <Route path="/" element={<HeroPage />} />
               </Routes>
             </Container>
           </main>
-          <footer>
-            <div className="text-center"> All rights reserved</div>
+
+          {/* Footer */}
+          <footer className="py-3 text-white" style={{ backgroundColor: '#301034' }}>
+            <Container>
+              <div className="text-center">
+                <div className="d-flex justify-content-center mb-2">
+                  <Link to="/" className="text-white mx-3">Home</Link>
+                  <Link to="/product" className="text-white mx-3">Products</Link>
+                  <Link to="/contact" className="text-white mx-3">Contact</Link>
+                  <Link to="/reviews" className="text-white mx-3">Reviews</Link>
+                </div>
+                <p className="mb-0">&copy; {new Date().getFullYear()} Lavendra Photography. All rights reserved.</p>
+              </div>
+            </Container>
           </footer>
         </div>
       </AuthProvider>
