@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Rating from './Rating';
 import { Store } from '../Store';
 import axios from 'axios';
+import Badge from 'react-bootstrap/Badge';
 
 function Product(props) {
   const { product } = props;
@@ -36,20 +37,38 @@ function Product(props) {
 
       <Card.Body>
         <Link to={`/product/${product.slug}`}>
-          <Card.Title>{product.name} </Card.Title>
+          <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
 
-        <Card.Text>{product.price}LKR</Card.Text>
+        <Card.Text>{product.price} LKR</Card.Text>
 
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
             Out of stock
           </Button>
         ) : (
-          <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+          <Button
+            className="add-to-cart-btn"
+            onClick={() => addToCartHandler(product)}
+          >
+            Add to Cart
+          </Button>
         )}
       </Card.Body>
+
+      <style jsx>{`
+        .add-to-cart-btn {
+          background-color: #6a1b9a;
+          border-color: #6a1b9a;
+          color: white;
+        }
+        
+        .add-to-cart-btn:hover {
+          background-color: #7b1fa2;
+          border-color: #7b1fa2;
+        }
+      `}</style>
     </Card>
   );
 }
