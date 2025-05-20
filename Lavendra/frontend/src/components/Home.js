@@ -1,17 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // <-- make sure this is imported
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      {/* Hero Section */}
+    <div className="home-page" style={{ overflowX: 'hidden' }}>
+      {/* Hero Section - Made more compact */}
       <section
-        className="d-flex align-items-center"
+        className="d-flex align-items-center py-4"
         style={{
-          minHeight: '90vh',
+          minHeight: '40vh', // Reduced from 90vh
           backgroundColor: '#ffffff',
           position: 'relative',
           overflow: 'hidden',
@@ -33,45 +33,48 @@ function HomePage() {
         <div className="container position-relative">
           <div className="row align-items-center">
             {/* Text */}
-            <div className="col-md-6 mb-4 mb-md-0">
+            <div className="col-md-6 mb-3 mb-md-0">
               <h1
-                className="fw-bold"
+                className="fw-bold mb-3" // Added margin bottom
                 style={{
                   color: '#6a1b9a',
-                  fontSize: '4rem', // bigger heading
+                  fontSize: '3rem', // Reduced from 4rem
                 }}
               >
                 Lavendra Photography
               </h1>
 
               <p
-                className="lead text-muted mb-6"
+                className="text-muted mb-4" // Reduced margin
                 style={{
-                  fontSize: '1.8rem', // bigger paragraph
+                  fontSize: '1.4rem', // Reduced from 1.8rem
                 }}
               >
                 Capturing life's precious moments with elegance and creativity.
               </p>
 
-              <div className="d-flex gap-3 flex-wrap">
+              <div className="d-flex gap-2 flex-wrap">
                 <button
-                  className="btn btn-primary btn-lg"
+                  className="btn btn-primary btn-lg px-3 py-2" // Added padding
                   style={{
                     backgroundColor: '#6a1b9a',
                     borderColor: '#6a1b9a',
                     borderRadius: '8px',
+                    color: 'white',
+                    fontSize: '1rem',
                   }}
                   onClick={() => navigate('/product')}
                 >
                   Explore Packages
                 </button>
                 <button
-                  className="btn btn-outline-primary btn-lg"
+                  className="btn btn-outline-primary btn-lg px-3 py-2" // Added padding
                   style={{
                     backgroundColor: 'white',
                     color: '#6a1b9a',
                     borderColor: '#6a1b9a',
                     borderRadius: '8px',
+                    fontSize: '1rem',
                   }}
                   onClick={() => navigate('/contact')}
                 >
@@ -85,11 +88,11 @@ function HomePage() {
               <div
                 style={{
                   position: 'relative',
-                  height: '400px',
+                  height: '350px', // Reduced from 400px
                   width: '100%',
                   borderRadius: '16px',
                   overflow: 'hidden',
-                  boxShadow: '0 15px 30px rgba(106, 27, 154, 0.2)',
+                  boxShadow: '0 10px 20px rgba(106, 27, 154, 0.2)', // Reduced shadow
                 }}
               >
                 <img
@@ -119,63 +122,82 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-5">
+      {/* Services Section - Made more compact */}
+      <section className="py-4">
+        {' '}
+        {/* Reduced padding */}
         <div className="container text-center">
-          <h2 className="fw-bold mb-5" style={{ color: '#6a1b9a' }}>
+          <h2
+            className="fw-bold mb-4"
+            style={{ color: '#6a1b9a', fontSize: '2rem' }}
+          >
+            {' '}
+            {/* Reduced size */}
             Our Services
           </h2>
-          <div className="row">
+          <div className="row g-3">
+            {' '}
+            {/* Reduced gutter */}
             {[
               {
                 title: 'Wedding Photography',
                 description:
-                  'Capture your special day with our premium wedding packages including pre-wedding shoots.',
+                  'Capture your special day with our premium wedding packages.',
                 icon: '💒',
               },
               {
                 title: 'Portrait Sessions',
                 description:
-                  'Professional studio or outdoor portrait sessions for individuals and families.',
+                  'Professional studio or outdoor portrait sessions.',
                 icon: '📷',
               },
               {
                 title: 'Commercial Photography',
-                description:
-                  'High-quality product and business photography for brands and e-commerce.',
+                description: 'High-quality product and business photography.',
                 icon: '🏢',
               },
               {
                 title: 'Rental Services',
-                description:
-                  'Equipment rental options to make your photoshoot perfect.',
+                description: 'Equipment rental options for your photoshoot.',
                 icon: '🛍️',
               },
               {
-                title: 'Better Payment Options',
+                title: 'Payment Options',
                 description: 'Flexible payment solutions for all clients.',
                 icon: '💳',
               },
               {
-                title: 'Customized Packages',
-                description: 'Tailor-made packages to suit your special needs.',
+                title: 'Custom Packages',
+                description: 'Tailor-made packages to suit your needs.',
                 icon: '📦',
               },
             ].map((service, index) => (
-              <div className="col-md-4 mb-4" key={index}>
+              <div className="col-md-4 mb-3" key={index}>
+                {' '}
+                {/* Reduced margin */}
                 <div
-                  className="p-4 h-100 shadow rounded-4"
+                  className="p-3 h-100 shadow rounded-3" // Reduced padding and rounded
                   style={{
                     transition: 'transform 0.3s, box-shadow 0.3s',
+                    minHeight: '180px', // Added fixed height
                   }}
                 >
-                  <div className="mb-3" style={{ fontSize: '2.5rem' }}>
+                  <div className="mb-2" style={{ fontSize: '2rem' }}>
+                    {' '}
+                    {/* Reduced size */}
                     {service.icon}
                   </div>
-                  <h5 className="fw-bold" style={{ color: '#6a1b9a' }}>
+                  <h5
+                    className="fw-bold mb-2"
+                    style={{ color: '#6a1b9a', fontSize: '1.1rem' }}
+                  >
                     {service.title}
                   </h5>
-                  <p className="text-muted">{service.description}</p>
+                  <p className="text-muted mb-0" style={{ fontSize: '0.9rem' }}>
+                    {' '}
+                    {/* Reduced size */}
+                    {service.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -183,44 +205,61 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial Section - Made more compact */}
       <section
+        className="py-3" // Reduced padding
         style={{
           background: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)',
-          padding: '4rem 0',
-          borderRadius: '16px',
+          borderRadius: '12px',
+          margin: '1rem 0',
         }}
       >
         <div className="container text-center">
-          <h3 className="fw-bold mb-4 text-white">Client Testimonials</h3>
-          <div
-            className="bg-white p-4 rounded-4 mx-auto"
-            style={{ maxWidth: '600px' }}
+          <h3
+            className="fw-bold mb-3"
+            style={{ color: '#6a1b9a', fontSize: '1.5rem' }}
           >
-            <p className="fst-italic mb-3" style={{ fontSize: '1.2rem' }}>
+            Client Testimonials
+          </h3>
+          <div
+            className="bg-white p-3 rounded-3 mx-auto" // Reduced padding
+            style={{ maxWidth: '500px' }} // Reduced width
+          >
+            <p className="fst-italic mb-2" style={{ fontSize: '1rem' }}>
+              {' '}
+              {/* Reduced size */}
               "Lavendra captured our wedding perfectly. The photos are
-              absolutely stunning and will help us remember this day forever."
+              stunning."
             </p>
-            <h6 className="fw-bold" style={{ color: '#6a1b9a' }}>
-              — Lavendra
+            <h6
+              className="fw-bold mb-0"
+              style={{ color: '#6a1b9a', fontSize: '0.9rem' }}
+            >
+              — Sarah & James
             </h6>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-5 text-center">
+      {/* Call to Action - Made more compact */}
+      <section className="py-3 text-center">
+        {' '}
+        {/* Reduced padding */}
         <div className="container">
-          <h3 className="fw-bold mb-4" style={{ color: '#6a1b9a' }}>
+          <h3
+            className="fw-bold mb-3"
+            style={{ color: '#6a1b9a', fontSize: '1.5rem' }}
+          >
             Ready to create beautiful memories?
           </h3>
           <button
-            className="btn btn-primary btn-lg"
+            className="btn btn-primary px-3 py-2" // Reduced padding
             style={{
               backgroundColor: '#6a1b9a',
               borderColor: '#6a1b9a',
               borderRadius: '8px',
-              boxShadow: '0 4px 15px rgba(106, 27, 154, 0.3)',
+              boxShadow: '0 3px 10px rgba(106, 27, 154, 0.3)', // Reduced shadow
+              fontSize: '1rem',
             }}
             onClick={() => navigate('/contact')}
           >

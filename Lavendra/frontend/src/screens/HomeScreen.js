@@ -7,8 +7,8 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';  // Import Button from react-bootstrap
-import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
 const reducer = (state, action) => {
@@ -31,7 +31,7 @@ function HomeScreen() {
     error: '',
   });
 
-  const navigate = useNavigate();  // Initialize the navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +47,7 @@ function HomeScreen() {
   }, []);
 
   const handleCustomizeClick = () => {
-    navigate('/custom');  // Navigate to /custom when the button is clicked
+    navigate('/custom');
   };
 
   return (
@@ -56,19 +56,12 @@ function HomeScreen() {
         <title>Lavendra</title>
       </Helmet>
       <Container>
-        <div className="d-flex justify-content-between align-items-center">
-          <h1
-            style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              marginTop: '1rem',
-              marginBottom: '1rem',
-            }}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1 className="featured-title">Featured Packages</h1>
+          <Button 
+            onClick={handleCustomizeClick}
+            className="customize-btn"
           >
-            Featured Packages
-          </h1>
-          <Button variant="primary" style={{ marginLeft: '10px' }} onClick={handleCustomizeClick}>
             Customize Packages
           </Button>
         </div>
@@ -87,6 +80,44 @@ function HomeScreen() {
           </Row>
         )}
       </Container>
+
+      <style jsx>{`
+        .featured-title {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #4a0072;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        .customize-btn {
+          background-color: #6a1b9a;
+          border-color: #6a1b9a;
+          padding: 0.75rem 1.5rem;
+          font-weight: 600;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          box-shadow: none;
+          color: #fff;
+        }
+        
+        .customize-btn:hover {
+          background-color: #7b1fa2;
+          border-color: #7b1fa2;
+          transform: translateY(-2px);
+          color:#000;
+          box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
+        }
+        
+        .customize-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 3px rgba(123, 31, 162, 0.3);
+        }
+        
+        .customize-btn:focus {
+          box-shadow: 0 0 0 0.25rem rgba(123, 31, 162, 0.5);
+        }
+      `}</style>
     </div>
   );
 }
