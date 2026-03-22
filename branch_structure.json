@@ -1,0 +1,30 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "It23157446",
+    "dev",
+    "it23149380",
+    "it23154230Payment_inquiry",
+    "it23173286",
+    "it23344556",
+    "main"
+  ],
+  "parent": {
+    "It23157446": "main",
+    "dev": "main",
+    "it23149380": "main",
+    "it23154230Payment_inquiry": "main",
+    "it23173286": "main",
+    "it23344556": "main",
+    "main": null
+  },
+  "order": [
+    "main",
+    "It23157446",
+    "dev",
+    "it23149380",
+    "it23154230Payment_inquiry",
+    "it23173286",
+    "it23344556"
+  ]
+}
